@@ -3,7 +3,7 @@
 Add your project screenshots here with the following naming convention:
 
 - `ati-portal.jpg` - ATI Government Portal screenshot
-- `dashboard.jpg` - Government Dashboard Analytics screenshot  
+- `dashboard.jpg` - Government Dashboard Analytics screenshot
 - `citizen-services.jpg` - Citizen Services Platform screenshot
 - `management-system.jpg` - Internal Management System screenshot
 - `forms-builder.jpg` - Digital Forms Builder screenshot

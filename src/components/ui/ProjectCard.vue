@@ -13,7 +13,19 @@
         :src="project.image" 
         :alt="project.title"
         loading="lazy"
+        @error="handleImageError"
+        @load="handleImageLoad"
       />
+      <div class="image-placeholder" v-if="imageError">
+        <div class="placeholder-content">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21,15 16,10 5,21"/>
+          </svg>
+          <p>{{ project.title }}</p>
+        </div>
+      </div>
       <div class="project-overlay">
         <div class="project-actions">
           <button 
@@ -100,6 +112,8 @@ export default {
   emits: ['click'],
   setup(props, { emit }) {
     const isHovered = ref(false)
+    const imageError = ref(false)
+    const imageLoaded = ref(false)
     const { createRipple, addButtonPress } = useMicroInteractions()
 
     const statusClass = computed(() => {
@@ -146,14 +160,30 @@ export default {
       }, 150)
     }
 
+    const handleImageError = (event) => {
+      console.log('Image failed to load:', props.project.image)
+      imageError.value = true
+      imageLoaded.value = false
+    }
+
+    const handleImageLoad = (event) => {
+      console.log('Image loaded successfully:', props.project.image)
+      imageError.value = false
+      imageLoaded.value = true
+    }
+
     return {
       isHovered,
+      imageError,
+      imageLoaded,
       statusClass,
       getTechColor,
       handleMouseEnter,
       handleMouseLeave,
       handleCardClick,
       handleButtonClick,
+      handleImageError,
+      handleImageLoad,
       openLink
     }
   }
@@ -201,6 +231,36 @@ export default {
 
 .project-card:hover .project-image img {
   transform: scale(1.05);
+}
+
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--color-border);
+}
+
+.placeholder-content {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: 1rem;
+}
+
+.placeholder-content svg {
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
+
+.placeholder-content p {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
 }
 
 .project-overlay {

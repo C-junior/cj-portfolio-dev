@@ -16,12 +16,138 @@
         <div class="timeline-container">
           <div class="timeline-line"></div>
           
+          <!-- Education Timeline Item -->
+          <div 
+            class="timeline-item education-item"
+            :class="{ 'expanded': expandedItems.includes('education') }"
+            :style="{ animationDelay: '0ms' }"
+          >
+            <!-- Timeline Node -->
+            <div class="timeline-node education-node">
+              <div class="node-inner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Education Card -->
+            <div class="experience-card education-card">
+              <div class="card-header" @click="toggleExpanded('education')">
+                <div class="position-info">
+                  <h3 class="position-title">{{ userProfile.education.current.degree }}</h3>
+                  <div class="company-info">
+                    <span class="company-name">{{ userProfile.education.current.degreePortuguese }}</span>
+                    <span class="location">{{ userProfile.education.current.institution }}</span>
+                  </div>
+                  <div class="period-info">
+                    <span class="period">{{ userProfile.education.current.startYear }} - {{ userProfile.education.current.expectedGraduation }}</span>
+                    <span class="duration">{{ userProfile.education.current.status }}</span>
+                    <span class="type education-type">Education</span>
+                  </div>
+                </div>
+                
+                <div class="expand-button">
+                  <svg 
+                    width="20" 
+                    height="20" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    stroke-width="2"
+                    :class="{ 'rotated': expandedItems.includes('education') }"
+                  >
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="card-content">
+                <p class="position-description">
+                  Currently pursuing a comprehensive degree in Systems Analysis and Development, 
+                  focusing on modern software development methodologies, system architecture, 
+                  and advanced programming concepts to enhance my technical expertise.
+                </p>
+
+                <!-- Expandable Details -->
+                <div class="expandable-content">
+                  <!-- Curriculum Focus -->
+                  <div class="detail-section">
+                    <h4 class="detail-title">Curriculum Focus</h4>
+                    <ul class="responsibility-list">
+                      <li class="responsibility-item" style="animation-delay: 0ms;">
+                        Software Engineering and Development Methodologies
+                      </li>
+                      <li class="responsibility-item" style="animation-delay: 100ms;">
+                        Database Design and Management Systems
+                      </li>
+                      <li class="responsibility-item" style="animation-delay: 200ms;">
+                        System Architecture and Design Patterns
+                      </li>
+                      <li class="responsibility-item" style="animation-delay: 300ms;">
+                        Project Management and Agile Methodologies
+                      </li>
+                      <li class="responsibility-item" style="animation-delay: 400ms;">
+                        Quality Assurance and Testing Strategies
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!-- Skills Being Developed -->
+                  <div class="detail-section">
+                    <h4 class="detail-title">Skills Being Developed</h4>
+                    <div class="tech-tags">
+                      <span class="tech-tag" style="animation-delay: 0ms;">System Analysis</span>
+                      <span class="tech-tag" style="animation-delay: 50ms;">Software Architecture</span>
+                      <span class="tech-tag" style="animation-delay: 100ms;">Database Design</span>
+                      <span class="tech-tag" style="animation-delay: 150ms;">Project Management</span>
+                      <span class="tech-tag" style="animation-delay: 200ms;">Quality Assurance</span>
+                      <span class="tech-tag" style="animation-delay: 250ms;">Agile Methodologies</span>
+                    </div>
+                  </div>
+
+                  <!-- Academic Goals -->
+                  <div class="detail-section">
+                    <h4 class="detail-title">Academic Goals</h4>
+                    <ul class="achievement-list">
+                      <li class="achievement-item" style="animation-delay: 0ms;">
+                        <div class="achievement-icon">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        </div>
+                        Deepen understanding of software architecture and system design principles
+                      </li>
+                      <li class="achievement-item" style="animation-delay: 100ms;">
+                        <div class="achievement-icon">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        </div>
+                        Enhance project management and team leadership capabilities
+                      </li>
+                      <li class="achievement-item" style="animation-delay: 200ms;">
+                        <div class="achievement-icon">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        </div>
+                        Apply theoretical knowledge to real-world development challenges
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <div 
             v-for="(position, index) in userProfile.experience.positions" 
             :key="position.id"
             class="timeline-item"
             :class="{ 'expanded': expandedItems.includes(position.id) }"
-            :style="{ animationDelay: `${index * 200}ms` }"
+            :style="{ animationDelay: `${(index + 1) * 200}ms` }"
           >
             <!-- Timeline Node -->
             <div class="timeline-node">
@@ -139,6 +265,10 @@
             <div class="stat-item">
               <div class="stat-number">15+</div>
               <div class="stat-label">Projects Delivered</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">{{ userProfile.education.current.expectedGraduation }}</div>
+              <div class="stat-label">Expected Graduation</div>
             </div>
           </div>
         </div>
@@ -287,6 +417,34 @@ const toggleExpanded = (positionId) => {
 
 .timeline-item:hover .node-inner {
   color: var(--color-accent);
+}
+
+/* Education specific styles */
+.education-item .timeline-node {
+  border-color: var(--color-secondary);
+}
+
+.education-node .node-inner {
+  color: var(--color-secondary);
+}
+
+.education-item:hover .timeline-node {
+  border-color: var(--color-accent);
+}
+
+.education-card {
+  border-color: rgba(59, 130, 246, 0.2);
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(59, 130, 246, 0.02) 100%);
+}
+
+.education-card:hover {
+  border-color: var(--color-secondary);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+}
+
+.education-type {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-secondary);
 }
 
 .experience-card {
@@ -512,7 +670,7 @@ const toggleExpanded = (positionId) => {
 
 .summary-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   padding: 2rem;
   background: var(--color-surface);
@@ -632,7 +790,7 @@ const toggleExpanded = (positionId) => {
   }
 
   .summary-stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     padding: 1.5rem;
   }
@@ -670,6 +828,12 @@ const toggleExpanded = (positionId) => {
   .tech-tag {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
+  }
+
+  .summary-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
   }
 }
 </style>

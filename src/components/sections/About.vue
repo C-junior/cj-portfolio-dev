@@ -25,12 +25,25 @@
             <div class="profile-photo-container">
               <div class="profile-photo">
                 <img 
+                  v-if="!profileImageError"
                   :src="userProfile.photo" 
                   :alt="`${userProfile.name.display} - Profile Photo`"
                   class="profile-image"
                   @error="handleImageError"
+                  @load="handleImageLoad"
                 />
-                <div class="photo-overlay">
+                <!-- Profile Photo Placeholder -->
+                <div v-if="profileImageError" class="profile-placeholder">
+                  <div class="placeholder-avatar">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                  </div>
+                  <p class="placeholder-text">{{ userProfile.name.display }}</p>
+                  <p class="placeholder-debug">Image not found: {{ userProfile.photo }}</p>
+                </div>
+                <div class="photo-overlay" v-if="!profileImageError">
                   <div class="photo-border"></div>
                 </div>
               </div>
@@ -163,7 +176,7 @@
 </template>
 
 <script setup>
-import { computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useIntersectionObserver, useAnimatedCounter } from '@/composables/useIntersectionObserver'
 import { USER_PROFILE } from '@/utils/constants'
 
@@ -181,6 +194,10 @@ const { currentValue: experienceCounter, startAnimation } = useAnimatedCounter(
   2000
 )
 
+// Profile image state
+const profileImageError = ref(false)
+const profileImageLoaded = ref(false)
+
 // Start counter animation when section becomes visible
 watch(isVisible, (visible) => {
   if (visible) {
@@ -190,10 +207,16 @@ watch(isVisible, (visible) => {
 
 // Handle profile image error
 const handleImageError = (event) => {
-  // Fallback to a placeholder or default image
-  event.target.src = '/images/profile-placeholder.jpg'
-  // Or you could hide the image container
-  // event.target.parentElement.style.display = 'none'
+  console.log('Profile image failed to load:', event.target.src)
+  profileImageError.value = true
+  profileImageLoaded.value = false
+}
+
+// Handle profile image load success
+const handleImageLoad = (event) => {
+  console.log('Profile image loaded successfully:', event.target.src)
+  profileImageError.value = false
+  profileImageLoaded.value = true
 }
 </script>
 
@@ -315,6 +338,42 @@ const handleImageError = (event) => {
 @keyframes rotateBorder {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Profile Photo Placeholder */
+.profile-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3px dashed var(--color-border);
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 1rem;
+}
+
+.placeholder-avatar {
+  margin-bottom: 0.5rem;
+  opacity: 0.6;
+}
+
+.placeholder-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.placeholder-debug {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin: 0.5rem 0 0 0;
+  opacity: 0.7;
+  word-break: break-all;
 }
 
 .intro-paragraph {

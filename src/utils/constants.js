@@ -5,6 +5,19 @@ export const USER_PROFILE = {
     display: "Cristovão Junior"
   },
   role: "Front-end Developer",
+  photo: "/images/profile-photo.png", // Add your photo here
+  bio: "Passionate front-end developer with 5 years of experience creating modern web applications. Currently pursuing a degree in Systems Analysis and Development while working on innovative government technology solutions.",
+  location: "Tocantins, Brazil",
+  education: {
+    current: {
+      degree: "Technology in Systems Analysis and Development",
+      degreePortuguese: "Tecnologia em Análise e Desenvolvimento de Sistemas (TADS)",
+      institution: "University Name", // You can update this with your actual university
+      status: "In Progress",
+      startYear: "2023", // Update with actual year
+      expectedGraduation: "2025" // Update with actual year
+    }
+  },
   experience: {
     total: 5,
     current: {
@@ -96,9 +109,9 @@ export const THEME_CONFIG = {
 export const PROJECTS = [
   {
     id: 1,
-    title: "Government Portal Redesign",
-    description: "Complete redesign of a government services portal with improved UX and accessibility compliance.",
-    image: "/api/placeholder/400/250",
+    title: "ATI Government Portal",
+    description: "Modern government services portal for Tocantins Technology Agency with improved accessibility and user experience.",
+    image: "/images/projects/ati-portal.jpg",
     technologies: ["Vue.js", "JavaScript", "CSS3", "Figma"],
     category: "Web Development",
     status: "Completed",
@@ -107,18 +120,19 @@ export const PROJECTS = [
       "Responsive design for all devices",
       "WCAG 2.1 accessibility compliance",
       "Performance optimization",
-      "Modern UI/UX design"
+      "Modern UI/UX design",
+      "Government service integration"
     ],
     links: {
-      demo: "#",
-      github: "#"
+      demo: "https://ati.to.gov.br", // Update with actual link
+      github: "#" // Add if available
     }
   },
   {
     id: 2,
-    title: "Interactive Dashboard",
-    description: "Real-time data visualization dashboard for monitoring government services and metrics.",
-    image: "/api/placeholder/400/250",
+    title: "Government Dashboard Analytics",
+    description: "Real-time data visualization dashboard for monitoring government services and citizen engagement metrics.",
+    image: "/images/projects/dashboard.jpg",
     technologies: ["Vue.js", "Chart.js", "JavaScript", "CSS3"],
     category: "Data Visualization",
     status: "Completed",
@@ -127,67 +141,71 @@ export const PROJECTS = [
       "Real-time data updates",
       "Interactive charts and graphs",
       "Responsive grid layout",
-      "Export functionality"
+      "Export functionality",
+      "Multi-department integration"
     ],
     links: {
-      demo: "#",
+      demo: "#", // Update with actual link
       github: "#"
     }
   },
   {
     id: 3,
-    title: "E-commerce Platform",
-    description: "Modern e-commerce solution with shopping cart, payment integration, and admin panel.",
-    image: "/api/placeholder/400/250",
-    technologies: ["React", "JavaScript", "Tailwind", "Figma"],
-    category: "E-commerce",
-    status: "In Progress",
-    year: "2024",
+    title: "Citizen Services Platform",
+    description: "Digital platform for citizens to access government services online with document management and appointment scheduling.",
+    image: "/images/projects/citizen-services.jpg",
+    technologies: ["Vue.js", "JavaScript", "CSS3", "API Integration"],
+    category: "Government Services",
+    status: "Completed",
+    year: "2023",
     features: [
-      "Shopping cart functionality",
-      "Payment gateway integration",
-      "Product catalog management",
-      "Admin dashboard"
+      "Online service requests",
+      "Document upload and management",
+      "Appointment scheduling system",
+      "Status tracking",
+      "Mobile-responsive design"
     ],
     links: {
-      demo: "#",
+      demo: "#", // Update with actual link
       github: "#"
     }
   },
   {
     id: 4,
-    title: "Mobile-First Web App",
-    description: "Progressive web application optimized for mobile devices with offline capabilities.",
-    image: "/api/placeholder/400/250",
-    technologies: ["Vue.js", "PWA", "JavaScript", "CSS3"],
-    category: "Mobile Development",
+    title: "Internal Management System",
+    description: "Comprehensive internal management system for government employees with workflow automation and reporting.",
+    image: "/images/projects/management-system.jpg",
+    technologies: ["Vue.js", "JavaScript", "CSS3", "Workflow Engine"],
+    category: "Enterprise Software",
     status: "Completed",
-    year: "2023",
+    year: "2022",
     features: [
-      "Progressive Web App features",
-      "Offline functionality",
-      "Push notifications",
-      "Mobile-optimized UI"
+      "Workflow automation",
+      "Employee management",
+      "Report generation",
+      "Role-based access control",
+      "Integration with existing systems"
     ],
     links: {
-      demo: "#",
+      demo: "#", // Internal system
       github: "#"
     }
   },
   {
     id: 5,
-    title: "Design System Library",
-    description: "Comprehensive design system and component library for consistent UI across projects.",
-    image: "/api/placeholder/400/250",
-    technologies: ["Vue.js", "Storybook", "CSS3", "Figma"],
-    category: "Design System",
+    title: "Digital Forms Builder",
+    description: "Dynamic form builder for creating government forms with validation, conditional logic, and data export capabilities.",
+    image: "/images/projects/forms-builder.jpg",
+    technologies: ["Vue.js", "JavaScript", "CSS3", "Form Engine"],
+    category: "Form Builder",
     status: "Completed",
-    year: "2023",
+    year: "2022",
     features: [
-      "Reusable component library",
-      "Design tokens system",
-      "Documentation site",
-      "Accessibility guidelines"
+      "Drag-and-drop form builder",
+      "Conditional logic support",
+      "Data validation rules",
+      "Export to multiple formats",
+      "Integration with databases"
     ],
     links: {
       demo: "#",
@@ -196,9 +214,9 @@ export const PROJECTS = [
   },
   {
     id: 6,
-    title: "Portfolio Website",
-    description: "Personal portfolio website showcasing projects and skills with gamification elements.",
-    image: "/api/placeholder/400/250",
+    title: "Personal Portfolio Website",
+    description: "Modern portfolio website showcasing projects and skills with gamification elements and smooth animations.",
+    image: "/images/projects/portfolio.jpg",
     technologies: ["Vue.js", "CSS3", "JavaScript", "Figma"],
     category: "Portfolio",
     status: "In Progress",
@@ -207,11 +225,12 @@ export const PROJECTS = [
       "Gamification elements",
       "Dark/Light theme toggle",
       "Smooth animations",
-      "Responsive design"
+      "Responsive design",
+      "Performance optimized"
     ],
     links: {
-      demo: "#",
-      github: "#"
+      demo: "#", // This portfolio
+      github: "https://github.com/cristovao-junior" // Update with your GitHub
     }
   }
 ]

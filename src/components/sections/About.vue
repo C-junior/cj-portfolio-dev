@@ -16,11 +16,26 @@
         </div>
 
         <div class="about-grid">
-          <!-- Personal Introduction -->
+          <!-- Profile Photo and Introduction -->
           <div 
             class="about-intro"
             v-scroll-reveal="{ animation: 'left', delay: 200 }"
           >
+            <!-- Profile Photo -->
+            <div class="profile-photo-container">
+              <div class="profile-photo">
+                <img 
+                  :src="userProfile.photo" 
+                  :alt="`${userProfile.name.display} - Profile Photo`"
+                  class="profile-image"
+                  @error="handleImageError"
+                />
+                <div class="photo-overlay">
+                  <div class="photo-border"></div>
+                </div>
+              </div>
+            </div>
+
             <div class="intro-text">
               <p class="intro-paragraph">
                 Hello! I'm <strong>{{ userProfile.name.display }}</strong>, a passionate 
@@ -34,9 +49,9 @@
                 contributing to innovative projects for the past {{ userProfile.experience.current.duration }} years.
               </p>
               <p class="intro-paragraph">
-                I'm passionate about creating beautiful, functional, and accessible web applications 
-                that provide exceptional user experiences. I enjoy staying up-to-date with the latest 
-                technologies and best practices in frontend development.
+                I'm also pursuing a degree in <strong>{{ userProfile.education.current.degree }}</strong> 
+                ({{ userProfile.education.current.degreePortuguese }}), expanding my knowledge in 
+                systems analysis and development to become a more well-rounded developer.
               </p>
             </div>
           </div>
@@ -71,6 +86,24 @@
                 <div class="stat-content">
                   <div class="stat-title">{{ userProfile.role }}</div>
                   <div class="stat-subtitle">Frontend Development</div>
+                </div>
+              </div>
+
+              <!-- Education -->
+              <div class="education-section">
+                <h3 class="subsection-title">Education</h3>
+                <div class="education-item">
+                  <div class="education-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                  </div>
+                  <div class="education-content">
+                    <div class="education-degree">{{ userProfile.education.current.degree }}</div>
+                    <div class="education-degree-pt">{{ userProfile.education.current.degreePortuguese }}</div>
+                    <div class="education-status">{{ userProfile.education.current.status }} • {{ userProfile.education.current.startYear }} - {{ userProfile.education.current.expectedGraduation }}</div>
+                  </div>
                 </div>
               </div>
 
@@ -154,6 +187,14 @@ watch(isVisible, (visible) => {
     startAnimation()
   }
 })
+
+// Handle profile image error
+const handleImageError = (event) => {
+  // Fallback to a placeholder or default image
+  event.target.src = '/images/profile-placeholder.jpg'
+  // Or you could hide the image container
+  // event.target.parentElement.style.display = 'none'
+}
 </script>
 
 <style scoped>
@@ -217,6 +258,63 @@ watch(isVisible, (visible) => {
   opacity: 0;
   transform: translateX(-30px);
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+/* Profile Photo Styles */
+.profile-photo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.profile-photo {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s ease;
+}
+
+.profile-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.photo-border {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--color-primary), var(--color-accent), var(--color-secondary));
+  z-index: -1;
+  animation: rotateBorder 3s linear infinite;
+}
+
+@keyframes rotateBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .intro-paragraph {
@@ -305,6 +403,54 @@ watch(isVisible, (visible) => {
 .stat-subtitle {
   font-size: 0.9rem;
   color: var(--color-text-secondary);
+}
+
+.education-section {
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  margin-bottom: 1rem;
+}
+
+.education-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.education-icon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.education-content {
+  flex: 1;
+}
+
+.education-degree {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.education-degree-pt {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.education-status {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .languages-section {
@@ -457,6 +603,11 @@ watch(isVisible, (visible) => {
     gap: 3rem;
   }
 
+  .profile-photo {
+    width: 150px;
+    height: 150px;
+  }
+
   .about-intro,
   .about-stats {
     transform: none;
@@ -494,6 +645,11 @@ watch(isVisible, (visible) => {
     font-size: 1.75rem;
   }
 
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+  }
+
   .intro-paragraph {
     font-size: 1rem;
   }
@@ -510,6 +666,16 @@ watch(isVisible, (visible) => {
   }
 
   .highlight-icon {
+    margin: 0;
+  }
+
+  .education-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .education-icon {
     margin: 0;
   }
 }

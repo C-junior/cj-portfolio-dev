@@ -86,7 +86,7 @@ const startAnimation = () => {
   if (animatedLevel.value > 0) return // Already animated
   
   setTimeout(() => {
-    const duration = 1500 // 1.5 seconds
+    const duration = 2000 // 2 seconds for smoother animation
     const startTime = Date.now()
     const targetLevel = props.skill.level
     
@@ -94,13 +94,36 @@ const startAnimation = () => {
       const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / duration, 1)
       
-      // Easing function for smooth animation
-      const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+      // Enhanced easing function with bounce effect
+      const easeOutBounce = (t) => {
+        if (t < 1 / 2.75) {
+          return 7.5625 * t * t
+        } else if (t < 2 / 2.75) {
+          return 7.5625 * (t -= 1.5 / 2.75) * t + 0.75
+        } else if (t < 2.5 / 2.75) {
+          return 7.5625 * (t -= 2.25 / 2.75) * t + 0.9375
+        } else {
+          return 7.5625 * (t -= 2.625 / 2.75) * t + 0.984375
+        }
+      }
       
-      animatedLevel.value = Math.round(targetLevel * easeOutCubic)
+      // Use cubic easing for smoother feel, bounce for final effect
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+      const easedProgress = progress < 0.8 ? easeOutCubic : easeOutBounce(progress)
+      
+      animatedLevel.value = Math.round(targetLevel * easedProgress)
       
       if (progress < 1) {
         requestAnimationFrame(animate)
+      } else {
+        // Add a subtle pulse effect when animation completes
+        const skillBarElement = skillBarRef.value
+        if (skillBarElement) {
+          skillBarElement.style.animation = 'pulse 0.5s ease-out'
+          setTimeout(() => {
+            skillBarElement.style.animation = ''
+          }, 500)
+        }
       }
     }
     
@@ -192,6 +215,27 @@ onMounted(() => {
   font-weight: 700;
   color: var(--color-accent);
   text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.skill-bar__percentage::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(var(--color-accent-rgb), 0.2), transparent);
+  opacity: 0;
+  animation: numberGlow 0.5s ease-out;
+  pointer-events: none;
+}
+
+@keyframes numberGlow {
+  0% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1); }
 }
 
 .skill-bar__track {
@@ -210,8 +254,23 @@ onMounted(() => {
   background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
   border-radius: 4px;
   transform-origin: left;
-  transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.3);
+}
+
+.skill-bar__progress::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  animation: progressShimmer 2s infinite;
 }
 
 .skill-bar__glow {
@@ -290,6 +349,26 @@ onMounted(() => {
   }
   100% {
     transform: translateX(100%);
+  }
+}
+
+@keyframes progressShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 8px 25px rgba(var(--color-primary-rgb), 0.15);
+  }
+  50% { 
+    transform: scale(1.02); 
+    box-shadow: 0 12px 35px rgba(var(--color-primary-rgb), 0.25);
   }
 }
 

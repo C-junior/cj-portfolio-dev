@@ -236,7 +236,12 @@ export default {
 .section-title {
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
-  color: var(--color-text);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-secondary));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite;
   margin-bottom: 1rem;
   position: relative;
 }
@@ -246,11 +251,13 @@ export default {
   position: absolute;
   bottom: -8px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scaleX(0);
   width: 60px;
   height: 3px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
   border-radius: 9999px;
+  animation: progressFill 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+  transform-origin: center;
 }
 
 .section-description {
@@ -317,6 +324,29 @@ export default {
 
 .project-item {
   animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Enhanced project list transitions */
+.project-list-enter-active {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-list-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-list-enter-from {
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+}
+
+.project-list-leave-to {
+  opacity: 0;
+  transform: translateY(-30px) scale(0.9);
+}
+
+.project-list-move {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .load-more-section {

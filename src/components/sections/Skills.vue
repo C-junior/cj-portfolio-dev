@@ -311,10 +311,28 @@ watch(sectionVisible, (visible) => {
   font-weight: 700;
   color: var(--color-text);
   margin: 0 0 1rem 0;
-  background: linear-gradient(135deg, var(--color-text), var(--color-accent));
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-secondary));
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 2px;
+  animation: progressFill 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+  transform-origin: left;
+  transform: translateX(-50%) scaleX(0);
 }
 
 .section-subtitle {
@@ -449,6 +467,22 @@ watch(sectionVisible, (visible) => {
   border-radius: 6px;
   transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  overflow: hidden;
+  transform-origin: left;
+}
+
+.progress-fill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0.1) 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0.1) 100%);
+  animation: shimmer 2s infinite;
 }
 
 .progress-fill::after {
@@ -458,8 +492,8 @@ watch(sectionVisible, (visible) => {
   right: 0;
   width: 20px;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
-  animation: shimmer 2s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+  animation: shimmer 2.5s infinite reverse;
 }
 
 .progress-percentage {

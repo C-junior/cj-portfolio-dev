@@ -69,7 +69,11 @@
       </div>
 
       <!-- Scroll indicator -->
-      <div class="scroll-indicator animate-bounce" style="animation-delay: 1.2s">
+      <div 
+        class="scroll-indicator animate-bounce" 
+        style="animation-delay: 1.2s"
+        @click="handleScrollClick"
+      >
         <div class="scroll-arrow">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M7 13l3 3 7-7M7 6l3 3 7-7"/>
@@ -167,6 +171,18 @@ const handleButtonClick = (event, sectionId) => {
   setTimeout(() => {
     scrollToSection(sectionId)
   }, 150)
+}
+
+// Handle scroll indicator click
+const handleScrollClick = () => {
+  const aboutSection = document.getElementById('about')
+  if (aboutSection) {
+    aboutSection.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    })
+    trackInteraction('scroll-indicator-click')
+  }
 }
 
 onMounted(() => {
@@ -304,11 +320,28 @@ onMounted(() => {
   font-size: clamp(2.5rem, 8vw, 4.5rem);
   font-weight: 700;
   margin: 1rem 0 2rem 0;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-secondary), var(--color-primary));
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradientShift 6s ease-in-out infinite;
   line-height: 1.2;
+  position: relative;
+}
+
+.hero-name::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 2px;
+  animation: progressFill 1.5s cubic-bezier(0.4, 0, 0.2, 1) 2s forwards;
+  transform-origin: center;
 }
 
 .typewriter-text {
@@ -433,14 +466,36 @@ onMounted(() => {
   gap: 0.5rem;
   color: var(--color-text-secondary);
   font-size: 0.875rem;
+  animation: float 3s ease-in-out infinite;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.scroll-indicator:hover {
+  color: var(--color-accent);
+  transform: translateX(-50%) translateY(-5px);
 }
 
 .scroll-arrow {
   opacity: 0.7;
+  animation: bounce 2s infinite;
 }
 
 .scroll-text {
   font-weight: 400;
+  opacity: 0.8;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
 /* Responsive design */

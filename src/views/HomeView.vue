@@ -1,41 +1,39 @@
 <template>
   <div class="home">
-    <main>
-      <!-- Hero Section - Load immediately as it's above the fold -->
-      <Hero />
-      
-      <div class="content-sections">
-        <!-- About Section - Lazy load -->
-        <LazyComponent 
-          :import-fn="() => import('@/components/sections/About.vue')"
-          :root-margin="'200px'"
-        />
+    <!-- Hero Section - Load immediately as it's above the fold -->
+    <Hero />
+    
+    <div class="content-sections">
+      <!-- About Section - Lazy load -->
+      <LazyComponent 
+        :import-fn="() => import('@/components/sections/About.vue')"
+        :root-margin="'200px'"
+      />
 
-        <!-- Skills Section - Lazy load -->
-        <LazyComponent 
-          :import-fn="() => import('@/components/sections/Skills.vue')"
-          :root-margin="'200px'"
-        />
+      <!-- Skills Section - Lazy load -->
+      <LazyComponent 
+        :import-fn="() => import('@/components/sections/Skills.vue')"
+        :root-margin="'200px'"
+      />
 
-        <!-- Experience Section - Lazy load -->
-        <LazyComponent 
-          :import-fn="() => import('@/components/sections/Experience.vue')"
-          :root-margin="'200px'"
-        />
+      <!-- Experience Section - Lazy load -->
+      <LazyComponent 
+        :import-fn="() => import('@/components/sections/Experience.vue')"
+        :root-margin="'200px'"
+      />
 
-        <!-- Projects Section - Lazy load -->
-        <LazyComponent 
-          :import-fn="() => import('@/components/sections/Projects.vue')"
-          :root-margin="'200px'"
-        />
+      <!-- Projects Section - Lazy load -->
+      <LazyComponent 
+        :import-fn="() => import('@/components/sections/Projects.vue')"
+        :root-margin="'200px'"
+      />
 
-        <!-- Contact Section - Lazy load -->
-        <LazyComponent 
-          :import-fn="() => import('@/components/sections/Contact.vue')"
-          :root-margin="'200px'"
-        />
-      </div>
-    </main>
+      <!-- Contact Section - Lazy load -->
+      <LazyComponent 
+        :import-fn="() => import('@/components/sections/Contact.vue')"
+        :root-margin="'200px'"
+      />
+    </div>
   </div>
 </template>
 

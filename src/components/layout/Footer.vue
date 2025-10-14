@@ -141,6 +141,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { LinkedinIcon, GithubIcon, MailIcon } from 'lucide-vue-next'
 import { USER_PROFILE, NAVIGATION_SECTIONS } from '@/utils/constants'
 
 // Data
@@ -155,17 +156,17 @@ const socialLinks = [
   {
     name: 'LinkedIn',
     url: '#',
-    icon: 'LinkedInIcon'
+    icon: LinkedinIcon
   },
   {
     name: 'GitHub',
     url: '#',
-    icon: 'GitHubIcon'
+    icon: GithubIcon
   },
   {
     name: 'Email',
     url: 'mailto:contact@example.com',
-    icon: 'EmailIcon'
+    icon: MailIcon
   }
 ]
 

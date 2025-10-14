@@ -3,7 +3,9 @@ import { RouterView } from 'vue-router'
 import { useTheme } from '@/composables/useTheme'
 import { useLoadingState } from '@/composables/useLoadingState'
 import { usePerformance, useResourceHints } from '@/composables/usePerformance'
-import ThemeToggle from '@/components/ui/ThemeToggle.vue'
+import Header from '@/components/layout/Header.vue'
+import Footer from '@/components/layout/Footer.vue'
+import Navigation from '@/components/layout/Navigation.vue'
 import LoadingIndicator from '@/components/ui/LoadingIndicator.vue'
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue'
 
@@ -32,15 +34,22 @@ preloadCriticalCSS()
       variant="overlay"
     />
     
-    <!-- Theme toggle for testing - will be moved to header later -->
-    <div class="theme-toggle-container">
-      <ThemeToggle />
-    </div>
+    <!-- Header with navigation and theme toggle -->
+    <Header />
     
-    <!-- Error boundary wrapper -->
-    <ErrorBoundary>
-      <RouterView />
-    </ErrorBoundary>
+    <!-- Desktop scroll spy navigation -->
+    <Navigation />
+    
+    <!-- Main content area -->
+    <main class="main-content">
+      <!-- Error boundary wrapper -->
+      <ErrorBoundary>
+        <RouterView />
+      </ErrorBoundary>
+    </main>
+    
+    <!-- Footer -->
+    <Footer />
   </div>
 </template>
 
@@ -50,12 +59,33 @@ preloadCriticalCSS()
   background-color: var(--color-background);
   color: var(--color-text);
   transition: var(--transition-colors);
+  display: flex;
+  flex-direction: column;
 }
 
-.theme-toggle-container {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: var(--z-fixed);
+.main-content {
+  flex: 1;
+  padding-top: 5rem; /* Account for fixed header */
+  min-height: calc(100vh - 5rem);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .main-content {
+    padding-top: 4.5rem; /* Smaller header on mobile */
+    min-height: calc(100vh - 4.5rem);
+  }
+}
+
+/* Ensure smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Accessibility: Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 </style>

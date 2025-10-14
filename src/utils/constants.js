@@ -5,7 +5,7 @@ export const USER_PROFILE = {
     display: "Cristovão Junior",
   },
   role: "Front-end Developer",
-  photo: "/images/projects/profile-photo.png", // Add your photo here
+  photo: "/images/profile-photo.png", // Add your photo here
   bio: "Passionate front-end developer with 5 years of experience creating modern web applications. Currently pursuing a degree in Systems Analysis and Development while working on innovative government technology solutions.",
   location: "Tocantins, Brazil",
   education: {

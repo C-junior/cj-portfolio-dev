@@ -18,6 +18,8 @@
     </div>
 
     <div class="hero-content">
+
+      
       <div class="hero-text">
         <!-- Animated greeting -->
         <div class="greeting animate-fade-in-up">
@@ -221,6 +223,17 @@ const handleScrollClick = () => {
   }
 };
 
+// Handle profile image load and error
+const onImageLoad = (event) => {
+  console.log("Profile image loaded successfully:", event.target.src);
+};
+
+const onImageError = (event) => {
+  console.error("Profile image failed to load:", event.target.src);
+  // Set fallback image if the main image fails
+  event.target.src = "/images/profile-placeholder.jpg"; // fallback to a default image
+};
+
 onMounted(() => {
   // Visit hero section for gamification
   visitSection("hero");
@@ -360,6 +373,33 @@ onMounted(() => {
   text-align: center;
   max-width: 800px;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Profile image container */
+.hero-image-container {
+  margin-bottom: 2rem;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--color-primary);
+  box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+  transition: all 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(30, 58, 138, 0.4);
+}
+
+.greeting {
+  margin-bottom: 1rem;
 }
 
 .greeting {

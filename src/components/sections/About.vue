@@ -1,0 +1,516 @@
+<template>
+  <section 
+    id="about" 
+    ref="sectionRef"
+    class="about-section section"
+    :class="{ 'is-visible': isVisible }"
+  >
+    <div class="container">
+      <div class="about-content">
+        <div 
+          class="about-header"
+          v-scroll-reveal="{ animation: 'up', delay: 0 }"
+        >
+          <h2 class="section-title">About Me</h2>
+          <div class="title-underline"></div>
+        </div>
+
+        <div class="about-grid">
+          <!-- Personal Introduction -->
+          <div 
+            class="about-intro"
+            v-scroll-reveal="{ animation: 'left', delay: 200 }"
+          >
+            <div class="intro-text">
+              <p class="intro-paragraph">
+                Hello! I'm <strong>{{ userProfile.name.display }}</strong>, a passionate 
+                {{ userProfile.role.toLowerCase() }} with {{ userProfile.experience.total }} years 
+                of experience creating engaging and user-friendly web experiences.
+              </p>
+              <p class="intro-paragraph">
+                I specialize in modern frontend technologies and have a strong background in 
+                web design and UI/UX. Currently, I'm working at 
+                <strong>{{ userProfile.experience.current.company }}</strong>, where I've been 
+                contributing to innovative projects for the past {{ userProfile.experience.current.duration }} years.
+              </p>
+              <p class="intro-paragraph">
+                I'm passionate about creating beautiful, functional, and accessible web applications 
+                that provide exceptional user experiences. I enjoy staying up-to-date with the latest 
+                technologies and best practices in frontend development.
+              </p>
+            </div>
+          </div>
+
+          <!-- Stats and Info -->
+          <div 
+            class="about-stats"
+            v-scroll-reveal="{ animation: 'right', delay: 400 }"
+          >
+            <div 
+              class="stats-grid"
+              v-stagger-children="{ delay: 150, animation: 'scale' }"
+            >
+              <!-- Experience Counter -->
+              <div class="stat-item">
+                <div class="stat-number">
+                  <span class="counter">{{ experienceCounter }}</span>
+                  <span class="stat-suffix">+</span>
+                </div>
+                <div class="stat-label">Years Experience</div>
+              </div>
+
+              <!-- Current Role -->
+              <div class="stat-item">
+                <div class="stat-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                    <line x1="8" y1="21" x2="16" y2="21"/>
+                    <line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </div>
+                <div class="stat-content">
+                  <div class="stat-title">{{ userProfile.role }}</div>
+                  <div class="stat-subtitle">Frontend Development</div>
+                </div>
+              </div>
+
+              <!-- Languages -->
+              <div class="languages-section">
+                <h3 class="subsection-title">Languages</h3>
+                <div class="languages-list">
+                  <div 
+                    v-for="(language, index) in userProfile.languages" 
+                    :key="language.name"
+                    class="language-item"
+                    :style="{ animationDelay: `${index * 100}ms` }"
+                  >
+                    <div class="language-info">
+                      <span class="language-name">{{ language.name }}</span>
+                      <span class="language-level" :class="`level-${language.level.toLowerCase()}`">
+                        {{ language.level }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <div class="highlight-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
+                <path d="M9 11V7a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/>
+              </svg>
+            </div>
+            <div class="highlight-content">
+              <h4>Professional Focus</h4>
+              <p>Specialized in Vue.js, React, and modern CSS frameworks with a focus on performance and user experience.</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <div class="highlight-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div class="highlight-content">
+              <h4>Design Background</h4>
+              <p>Strong foundation in UI/UX design with {{ userProfile.skills.design.find(s => s.name === 'UI Design')?.years }} years of experience creating intuitive interfaces.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { computed, watch } from 'vue'
+import { useIntersectionObserver, useAnimatedCounter } from '@/composables/useIntersectionObserver'
+import { USER_PROFILE } from '@/utils/constants'
+
+const userProfile = USER_PROFILE
+
+// Intersection observer for scroll animations
+const { target: sectionRef, isVisible } = useIntersectionObserver({
+  threshold: 0.2,
+  rootMargin: '0px 0px -100px 0px'
+})
+
+// Animated counter for years of experience
+const { currentValue: experienceCounter, startAnimation } = useAnimatedCounter(
+  userProfile.experience.total,
+  2000
+)
+
+// Start counter animation when section becomes visible
+watch(isVisible, (visible) => {
+  if (visible) {
+    startAnimation()
+  }
+})
+</script>
+
+<style scoped>
+.about-section {
+  padding: 6rem 0;
+  background: var(--color-background);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  opacity: 0.3;
+}
+
+.about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.title-underline {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  margin: 0 auto;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.about-intro {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.intro-paragraph {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.intro-paragraph strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.about-stats {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+}
+
+.stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.stat-number {
+  display: flex;
+  align-items: baseline;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.counter {
+  font-family: 'Inter', monospace;
+}
+
+.stat-suffix {
+  font-size: 1.5rem;
+  margin-left: 0.2rem;
+  color: var(--color-accent);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-icon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.stat-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.languages-section {
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.subsection-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+.languages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.language-item {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.language-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.language-name {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.language-level {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.level-native {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.level-intermediate {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--color-accent);
+}
+
+.about-highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
+}
+
+.highlight-item {
+  display: flex;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  transition: all 0.3s ease;
+}
+
+.highlight-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.highlight-icon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.highlight-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.highlight-content p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Visibility animations */
+.about-section.is-visible .about-header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-section.is-visible .title-underline {
+  transform: scaleX(1);
+}
+
+.about-section.is-visible .about-intro {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-section.is-visible .about-stats {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.about-section.is-visible .about-highlights {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-section.is-visible .language-item {
+  animation-play-state: running;
+}
+
+@keyframes slideInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-section {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .about-intro,
+  .about-stats {
+    transform: none;
+  }
+
+  .about-section.is-visible .about-intro,
+  .about-section.is-visible .about-stats {
+    transform: none;
+  }
+
+  .about-highlights {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .highlight-item {
+    padding: 1.5rem;
+  }
+
+  .stat-item {
+    padding: 1.25rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section {
+    padding: 3rem 0;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .intro-paragraph {
+    font-size: 1rem;
+  }
+
+  .stat-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .highlight-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .highlight-icon {
+    margin: 0;
+  }
+}
+</style>

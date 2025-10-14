@@ -94,7 +94,7 @@ export default {
     const activeFilter = ref('all')
     const selectedProject = ref(null)
     const visibleProjects = ref(6) // Start with 6 projects
-    const { trackSectionVisit, trackInteraction } = useGamification()
+    const { visitSection, trackInteraction } = useGamification()
     const { createRipple, addButtonPress } = useMicroInteractions()
 
     // Filter functionality
@@ -189,7 +189,7 @@ export default {
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              trackSectionVisit('projects')
+              visitSection('projects')
               observer.disconnect()
             }
           })

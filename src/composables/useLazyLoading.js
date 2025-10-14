@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, markRaw, shallowRef } from 'vue'
 
 /**
  * Composable for lazy loading images with intersection observer
@@ -87,7 +87,7 @@ export function useLazyImage(src, options = {}) {
 export function useLazyComponent(importFn, options = {}) {
   const componentRef = ref(null)
   const isVisible = ref(false)
-  const component = ref(null)
+  const component = shallowRef(null)
 
   const {
     rootMargin = '100px',
@@ -106,7 +106,7 @@ export function useLazyComponent(importFn, options = {}) {
             if (entry.isIntersecting && !component.value) {
               isVisible.value = true
               importFn().then((module) => {
-                component.value = module.default || module
+                component.value = markRaw(module.default || module)
               })
               if (observer && componentRef.value) {
                 observer.unobserve(componentRef.value)
@@ -125,7 +125,7 @@ export function useLazyComponent(importFn, options = {}) {
       // Fallback - load immediately
       isVisible.value = true
       importFn().then((module) => {
-        component.value = module.default || module
+        component.value = markRaw(module.default || module)
       })
     }
   })

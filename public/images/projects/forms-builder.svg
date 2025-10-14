@@ -1,0 +1,29 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#1e3a8a"/>
+  
+  <!-- Main container -->
+  <rect x="40" y="40" width="720" height="420" rx="8" fill="#f8fafc"/>
+  
+  <!-- Header -->
+  <rect x="60" y="60" width="680" height="60" fill="#3b82f6"/>
+  
+  <!-- Title -->
+  <text x="400" y="100" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#f8fafc" text-anchor="middle">Forms Builder</text>
+  
+  <!-- Content blocks -->
+  <rect x="80" y="140" width="200" height="120" rx="4" fill="#e2e8f0"/>
+  <rect x="300" y="140" width="200" height="120" rx="4" fill="#e2e8f0"/>
+  <rect x="520" y="140" width="200" height="120" rx="4" fill="#e2e8f0"/>
+  
+  <!-- Main content area -->
+  <rect x="80" y="280" width="640" height="140" rx="4" fill="#e2e8f0"/>
+  
+  <!-- Placeholder text -->
+  <text x="400" y="320" font-family="Arial, sans-serif" font-size="16" fill="#636670" text-anchor="middle">Project Screenshot Placeholder</text>
+  <text x="400" y="350" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af" text-anchor="middle">Replace with actual project image</text>
+  
+  <!-- Decorative elements -->
+  <rect x="100" y="380" width="600" height="8" rx="4" fill="#3b82f6"/>
+  <rect x="100" y="400" width="400" height="8" rx="4" fill="#60a5fa"/>
+</svg>

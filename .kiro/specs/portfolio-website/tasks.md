@@ -157,6 +157,11 @@
 
 - [ ] 15. Add project images and optimize assets
 
+
+
+
+
+
   - Add placeholder project images to public/images/projects/
   - Optimize image loading with proper alt text and lazy loading
   - Ensure all project images are properly referenced

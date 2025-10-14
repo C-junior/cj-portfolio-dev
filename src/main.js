@@ -13,6 +13,9 @@ import { scrollReveal, staggerChildren, microInteraction } from './directives/sc
 // Import performance monitoring
 import { runPerformanceTest } from './utils/performanceTest.js'
 
+// Import asset preloading
+import { initializeAssetPreloading } from './utils/preloadAssets.js'
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -36,6 +39,9 @@ app.config.errorHandler = (err, instance, info) => {
 }
 
 app.mount('#app')
+
+// Initialize asset preloading for better performance
+initializeAssetPreloading()
 
 // Run performance test after app is mounted
 if (import.meta.env.DEV) {

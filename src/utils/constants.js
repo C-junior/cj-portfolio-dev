@@ -137,7 +137,7 @@ export const PROJECTS = [
     title: "ATI Government Portal",
     description:
       "Modern government services portal for Tocantins Technology Agency with improved accessibility and user experience.",
-    image: "/images/projects/ati-portal.jpg",
+    image: "/images/projects/ati-portal.svg",
     technologies: ["Vue.js", "JavaScript", "CSS3", "Figma"],
     category: "Web Development",
     status: "Completed",
@@ -159,7 +159,7 @@ export const PROJECTS = [
     title: "Government Dashboard Analytics",
     description:
       "Real-time data visualization dashboard for monitoring government services and citizen engagement metrics.",
-    image: "/images/projects/dashboard.jpg",
+    image: "/images/projects/dashboard.svg",
     technologies: ["Vue.js", "Chart.js", "JavaScript", "CSS3"],
     category: "Data Visualization",
     status: "Completed",
@@ -181,7 +181,7 @@ export const PROJECTS = [
     title: "Citizen Services Platform",
     description:
       "Digital platform for citizens to access government services online with document management and appointment scheduling.",
-    image: "/images/projects/citizen-services.jpg",
+    image: "/images/projects/citizen-services.svg",
     technologies: ["Vue.js", "JavaScript", "CSS3", "API Integration"],
     category: "Government Services",
     status: "Completed",
@@ -203,7 +203,7 @@ export const PROJECTS = [
     title: "Internal Management System",
     description:
       "Comprehensive internal management system for government employees with workflow automation and reporting.",
-    image: "/images/projects/management-system.jpg",
+    image: "/images/projects/management-system.svg",
     technologies: ["Vue.js", "JavaScript", "CSS3", "Workflow Engine"],
     category: "Enterprise Software",
     status: "Completed",
@@ -225,7 +225,7 @@ export const PROJECTS = [
     title: "Digital Forms Builder",
     description:
       "Dynamic form builder for creating government forms with validation, conditional logic, and data export capabilities.",
-    image: "/images/projects/forms-builder.jpg",
+    image: "/images/projects/forms-builder.svg",
     technologies: ["Vue.js", "JavaScript", "CSS3", "Form Engine"],
     category: "Form Builder",
     status: "Completed",
@@ -247,7 +247,7 @@ export const PROJECTS = [
     title: "Personal Portfolio Website",
     description:
       "Modern portfolio website showcasing projects and skills with gamification elements and smooth animations.",
-    image: "/images/projects/portfolio.jpg",
+    image: "/images/projects/portfolio.svg",
     technologies: ["Vue.js", "CSS3", "JavaScript", "Figma"],
     category: "Portfolio",
     status: "In Progress",

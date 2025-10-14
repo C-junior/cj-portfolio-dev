@@ -52,13 +52,52 @@
     </div>
 
     <div class="image-test">
-      <h3>Wedding Project Test</h3>
+      <h3>Project Images Test</h3>
+      
+      <h4>Actual Project Images</h4>
       <p>Testing: /images/projects/naissaecristovao.png</p>
       <img
         src="/images/projects/naissaecristovao.png"
         alt="Wedding Project"
         onload="this.nextElementSibling.innerHTML='✅ Image loaded successfully'"
         onerror="this.nextElementSibling.innerHTML='❌ Image failed to load'"
+      />
+      <p class="status">Loading...</p>
+
+      <p>Testing: /images/projects/agrotins.png</p>
+      <img
+        src="/images/projects/agrotins.png"
+        alt="Agrotins Project"
+        onload="this.nextElementSibling.innerHTML='✅ Image loaded successfully'"
+        onerror="this.nextElementSibling.innerHTML='❌ Image failed to load'"
+      />
+      <p class="status">Loading...</p>
+
+      <h4>Placeholder Images (SVG)</h4>
+      <p>Testing: /images/projects/ati-portal.svg</p>
+      <img
+        src="/images/projects/ati-portal.svg"
+        alt="ATI Portal Placeholder"
+        onload="this.nextElementSibling.innerHTML='✅ Placeholder loaded successfully'"
+        onerror="this.nextElementSibling.innerHTML='❌ Placeholder failed to load'"
+      />
+      <p class="status">Loading...</p>
+
+      <p>Testing: /images/projects/dashboard.svg</p>
+      <img
+        src="/images/projects/dashboard.svg"
+        alt="Dashboard Placeholder"
+        onload="this.nextElementSibling.innerHTML='✅ Placeholder loaded successfully'"
+        onerror="this.nextElementSibling.innerHTML='❌ Placeholder failed to load'"
+      />
+      <p class="status">Loading...</p>
+
+      <p>Testing: /images/projects/portfolio.svg</p>
+      <img
+        src="/images/projects/portfolio.svg"
+        alt="Portfolio Placeholder"
+        onload="this.nextElementSibling.innerHTML='✅ Placeholder loaded successfully'"
+        onerror="this.nextElementSibling.innerHTML='❌ Placeholder failed to load'"
       />
       <p class="status">Loading...</p>
     </div>
@@ -89,8 +128,23 @@
         img.src = url;
       }
 
+      // Test profile images
       testImage("/images/profile-photo.png", "Profile Photo");
+      testImage("/images/profile-placeholder.svg", "Profile Placeholder");
+      
+      // Test actual project images
       testImage("/images/projects/naissaecristovao.png", "Wedding Project");
+      testImage("/images/projects/agrotins.png", "Agrotins Project");
+      testImage("/images/projects/docegabi.png", "Doce Gabi Project");
+      testImage("/images/projects/quartzo-preview.png", "Quartzo Project");
+      
+      // Test placeholder images
+      testImage("/images/projects/ati-portal.svg", "ATI Portal Placeholder");
+      testImage("/images/projects/dashboard.svg", "Dashboard Placeholder");
+      testImage("/images/projects/citizen-services.svg", "Citizen Services Placeholder");
+      testImage("/images/projects/management-system.svg", "Management System Placeholder");
+      testImage("/images/projects/forms-builder.svg", "Forms Builder Placeholder");
+      testImage("/images/projects/portfolio.svg", "Portfolio Placeholder");
     </script>
   </body>
 </html>

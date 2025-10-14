@@ -29,6 +29,7 @@
                   :src="userProfile.photo" 
                   :alt="`${userProfile.name.display} - Profile Photo`"
                   class="profile-image"
+                  loading="lazy"
                   @error="handleImageError"
                   @load="handleImageLoad"
                 />

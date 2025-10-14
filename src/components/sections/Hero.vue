@@ -466,19 +466,17 @@ onMounted(() => {
   gap: 0.5rem;
   color: var(--color-text-secondary);
   font-size: 0.875rem;
-  animation: float 3s ease-in-out infinite;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .scroll-indicator:hover {
   color: var(--color-accent);
-  transform: translateX(-50%) translateY(-5px);
 }
 
 .scroll-arrow {
   opacity: 0.7;
-  animation: bounce 2s infinite;
+  animation: simpleBounce 2s infinite;
 }
 
 .scroll-text {
@@ -486,15 +484,12 @@ onMounted(() => {
   opacity: 0.8;
 }
 
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+@keyframes simpleBounce {
+  0%, 100% {
     transform: translateY(0);
   }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
+  50% {
+    transform: translateY(-8px);
   }
 }
 

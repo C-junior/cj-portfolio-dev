@@ -8,7 +8,11 @@ export const ACHIEVEMENT_TYPES = {
   EXPLORER: 'explorer',
   COMPLETIONIST: 'completionist',
   CURIOUS: 'curious',
-  ENGAGED: 'engaged'
+  ENGAGED: 'engaged',
+  SKILL_MASTER: 'skill-master',
+  SKILL_EXPERT: 'skill-expert',
+  SKILL_ADVANCED: 'skill-advanced',
+  SKILL_PROFICIENT: 'skill-proficient'
 }
 
 // Achievement definitions
@@ -44,8 +48,51 @@ export const ACHIEVEMENTS = {
     icon: '⏰',
     threshold: 120, // 2 minutes in seconds
     type: 'time'
+  },
+  [ACHIEVEMENT_TYPES.SKILL_MASTER]: {
+    id: ACHIEVEMENT_TYPES.SKILL_MASTER,
+    title: 'Skill Master',
+    description: 'Achieved expertise in multiple skills',
+    icon: '🥇',
+    threshold: 5, // Number of skills at expert level (90%+)
+    type: 'skill-expert-count'
+  },
+  [ACHIEVEMENT_TYPES.SKILL_EXPERT]: {
+    id: ACHIEVEMENT_TYPES.SKILL_EXPERT,
+    title: 'Skill Expert',
+    description: 'Reached expert level in a skill',
+    icon: '⭐',
+    threshold: 90, // Skill level percentage
+    type: 'skill-expert'
+  },
+  [ACHIEVEMENT_TYPES.SKILL_ADVANCED]: {
+    id: ACHIEVEMENT_TYPES.SKILL_ADVANCED,
+    title: 'Advanced Skill',
+    description: 'Achieved advanced level in a skill',
+    icon: '✨',
+    threshold: 80, // Skill level percentage
+    type: 'skill-advanced'
+  },
+  [ACHIEVEMENT_TYPES.SKILL_PROFICIENT]: {
+    id: ACHIEVEMENT_TYPES.SKILL_PROFICIENT,
+    title: 'Proficient Skill',
+    description: 'Achieved proficiency in a skill',
+    icon: '🎯',
+    threshold: 70, // Skill level percentage
+    type: 'skill-proficient'
   }
 }
+
+// Skill achievement tracking
+const skillAchievements = reactive({
+  trackedSkills: [],
+  skillLevels: {},
+  skillTypeUnlocks: {
+    'skill-expert': [],
+    'skill-advanced': [],
+    'skill-proficient': []
+  }
+})
 
 // Global reactive gamification state
 const gamificationState = reactive({
@@ -152,6 +199,24 @@ export function useGamification() {
         case 'time':
           shouldUnlock = gamificationState.timeSpent >= achievement.threshold
           break
+        case 'skill-expert':
+          shouldUnlock = Object.values(skillAchievements.skillLevels).some(level => level >= achievement.threshold)
+          break
+        case 'skill-advanced':
+          shouldUnlock = Object.values(skillAchievements.skillLevels).some(level => level >= achievement.threshold)
+          break
+        case 'skill-proficient':
+          shouldUnlock = Object.values(skillAchievements.skillLevels).some(level => level >= achievement.threshold)
+          break
+        case 'skill-expert-count':
+          shouldUnlock = skillAchievements.skillTypeUnlocks['skill-expert'].length >= achievement.threshold
+          break
+        case 'skill-advanced-count':
+          shouldUnlock = skillAchievements.skillTypeUnlocks['skill-advanced'].length >= achievement.threshold
+          break
+        case 'skill-proficient-count':
+          shouldUnlock = skillAchievements.skillTypeUnlocks['skill-proficient'].length >= achievement.threshold
+          break
       }
 
       if (shouldUnlock) {
@@ -189,6 +254,97 @@ export function useGamification() {
     window.dispatchEvent(new CustomEvent('achievement-unlocked', {
       detail: testAchievement
     }))
+  }
+
+  // Track skill proficiency achievement
+  const trackSkillAchievement = (skillName, level) => {
+    // Update the skill level
+    skillAchievements.skillLevels[skillName] = level
+    
+    // Check for skill-based achievements
+    checkSkillAchievements(skillName, level)
+    checkAchievements()
+    saveGamificationData()
+  }
+
+  // Check and unlock skill-related achievements
+  const checkSkillAchievements = (skillName, level) => {
+    // Check for skill-expert achievement
+    if (level >= 90 && !skillAchievements.skillTypeUnlocks['skill-expert'].includes(skillName)) {
+      skillAchievements.skillTypeUnlocks['skill-expert'].push(skillName)
+      // Check if we have enough expert skills for expert count achievement
+      checkSkillCountAchievements()
+      // Also check for individual expert achievement
+      const skillExpertAchievement = ACHIEVEMENTS[ACHIEVEMENT_TYPES.SKILL_EXPERT]
+      if (!gamificationState.achievements.some(a => a.id === skillExpertAchievement.id)) {
+        unlockAchievement(skillExpertAchievement)
+      }
+    }
+    // Check for skill-advanced achievement
+    else if (level >= 80 && !skillAchievements.skillTypeUnlocks['skill-advanced'].includes(skillName)) {
+      skillAchievements.skillTypeUnlocks['skill-advanced'].push(skillName)
+      const skillAdvancedAchievement = ACHIEVEMENTS[ACHIEVEMENT_TYPES.SKILL_ADVANCED]
+      if (!gamificationState.achievements.some(a => a.id === skillAdvancedAchievement.id)) {
+        unlockAchievement(skillAdvancedAchievement)
+      }
+    }
+    // Check for skill-proficient achievement
+    else if (level >= 70 && !skillAchievements.skillTypeUnlocks['skill-proficient'].includes(skillName)) {
+      skillAchievements.skillTypeUnlocks['skill-proficient'].push(skillName)
+      const skillProficientAchievement = ACHIEVEMENTS[ACHIEVEMENT_TYPES.SKILL_PROFICIENT]
+      if (!gamificationState.achievements.some(a => a.id === skillProficientAchievement.id)) {
+        unlockAchievement(skillProficientAchievement)
+      }
+    }
+  }
+
+  // Check for skill count achievements
+  const checkSkillCountAchievements = () => {
+    const expertSkillCount = skillAchievements.skillTypeUnlocks['skill-expert'].length
+    
+    // Check for skill master achievement
+    if (expertSkillCount >= 5) { // 5 expert level skills
+      const skillMasterAchievement = ACHIEVEMENTS[ACHIEVEMENT_TYPES.SKILL_MASTER]
+      if (!gamificationState.achievements.some(a => a.id === skillMasterAchievement.id)) {
+        unlockAchievement(skillMasterAchievement)
+      }
+    }
+  }
+
+  // Get skill achievement progress
+  const getSkillAchievementProgress = (achievementId) => {
+    const achievement = ACHIEVEMENTS[achievementId]
+    if (!achievement) return 0
+
+    let current = 0
+    switch (achievement.type) {
+      case 'skill-expert':
+        // Check if any skill has reached expert level
+        current = Math.max(...Object.values(skillAchievements.skillLevels).filter(level => level >= achievement.threshold))
+        break
+      case 'skill-advanced':
+        // Check if any skill has reached advanced level
+        current = Math.max(...Object.values(skillAchievements.skillLevels).filter(level => level >= achievement.threshold))
+        break
+      case 'skill-proficient':
+        // Check if any skill has reached proficient level
+        current = Math.max(...Object.values(skillAchievements.skillLevels).filter(level => level >= achievement.threshold))
+        break
+      case 'skill-expert-count':
+        // Count of skills at expert level (90%+)
+        current = skillAchievements.skillTypeUnlocks['skill-expert'].length
+        break
+      case 'skill-advanced-count':
+        current = skillAchievements.skillTypeUnlocks['skill-advanced'].length
+        break
+      case 'skill-proficient-count':
+        current = skillAchievements.skillTypeUnlocks['skill-proficient'].length
+        break
+      default:
+        return 0
+    }
+
+    return Math.min(current / achievement.threshold, 1)
   }
 
   // Computed properties
@@ -315,7 +471,9 @@ export function useGamification() {
     initializeGamification,
     visitSection,
     trackInteraction,
+    trackSkillAchievement,
     getProgressForAchievement,
+    getSkillAchievementProgress,
     resetGamification,
     triggerAchievement,
     

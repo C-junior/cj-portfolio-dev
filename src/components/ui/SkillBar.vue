@@ -24,8 +24,40 @@
           transform: `scaleX(${isVisible ? 1 : 0})`
         }"
       >
+        <!-- Skill level indicators -->
+        <div class="skill-level-indicators">
+          <span 
+            v-for="(level, index) in levelThresholds" 
+            :key="index"
+            class="level-indicator" 
+            :class="{ 'active': animatedLevel >= level.threshold }" 
+            :style="{ left: level.position + '%' }"
+            :title="getLevelName(level.threshold)"
+          >
+            {{ level.icon }}
+          </span>
+        </div>
         <div class="skill-bar__glow"></div>
+        <!-- XP points display -->
+        <div class="skill-xp" v-if="animatedLevel > 0">
+          {{ Math.floor(animatedLevel * 10) }} XP
+        </div>
       </div>
+    </div>
+    
+    <!-- Additional skill indicators below the progress bar -->
+    <div class="skill-indicators">
+      <div class="level-icons">
+        <span 
+          v-for="(level, index) in levelThresholds" 
+          :key="'icon_'+index"
+          class="level-icon" 
+          :class="{ 'active': animatedLevel >= level.threshold }" 
+        >
+          {{ level.icon }}
+        </span>
+      </div>
+      <span class="icon-xp">{{ Math.floor(animatedLevel * 10) }} XP</span>
     </div>
     
     <!-- Hover tooltip with additional details -->
@@ -68,7 +100,7 @@ const props = defineProps({
   }
 })
 
-const { trackInteraction } = useGamification()
+const { trackInteraction, trackSkillAchievement } = useGamification()
 
 // Refs
 const skillBarRef = ref(null)
@@ -124,12 +156,29 @@ const startAnimation = () => {
             skillBarElement.style.animation = ''
           }, 500)
         }
+        
+        // Track skill achievement when animation completes
+        trackSkillAchievement(props.skill.name, props.skill.level)
       }
     }
     
     requestAnimationFrame(animate)
   }, props.animationDelay)
 }
+
+// Watch for visibility changes and start animation when visible
+watch(isVisible, (visible) => {
+  if (visible && animatedLevel.value === 0) {
+    startAnimation()
+  }
+})
+
+// Initialize animation if already visible
+onMounted(() => {
+  if (isVisible.value) {
+    startAnimation()
+  }
+})
 
 // Watch for visibility changes to trigger animation
 watch(isVisible, (visible) => {
@@ -156,10 +205,52 @@ const getLevelDescription = (level) => {
   return 'Learning'
 }
 
-// Initialize animation if already visible
+// Define skill level thresholds for gamification
+const levelThresholds = computed(() => [
+  { threshold: 20, position: 20, icon: '🌱', name: 'Beginner' }, // Beginner
+  { threshold: 40, position: 40, icon: '⭐', name: 'Novice' }, // Novice
+  { threshold: 60, position: 60, icon: '⚡', name: 'Intermediate' }, // Intermediate
+  { threshold: 80, position: 80, icon: '🔥', name: 'Advanced' }, // Advanced
+  { threshold: 90, position: 90, icon: '🎯', name: 'Expert' }  // Expert
+])
+
+// Get level name for title attribute
+const getLevelName = (threshold) => {
+  const level = levelThresholds.value.find(l => l.threshold === threshold)
+  return level ? level.name : ''
+}
+
+// Initialize to the actual skill level if animation doesn't start
 onMounted(() => {
+  // Set the level immediately to prevent 0% display
+  animatedLevel.value = props.skill.level
+  
+  // Start animation if element is visible
   if (isVisible.value) {
+    animatedLevel.value = 0 // Reset to 0 to start animation
     startAnimation()
+  }
+})
+
+// Watch for when the skill prop is updated and ensure the level is tracked
+watch(() => props.skill.level, (newLevel) => {
+  if (newLevel && animatedLevel.value < newLevel) {
+    // If the skill level is updated and our animated level is lower, update it
+    animatedLevel.value = newLevel
+  }
+  // Track the updated skill achievement
+  if (props.skill.name) {
+    trackSkillAchievement(props.skill.name, newLevel)
+  }
+})
+
+// Watch for visibility changes and start animation when visible
+watch(isVisible, (visible) => {
+  if (visible && animatedLevel.value === 0) {
+    startAnimation()
+  } else if (visible && animatedLevel.value === props.skill.level) {
+    // If animation already completed, ensure correct level is shown
+    animatedLevel.value = props.skill.level
   }
 })
 </script>
@@ -387,6 +478,106 @@ onMounted(() => {
 .tooltip-leave-from {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+/* Skill level indicators */
+.skill-level-indicators {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.level-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+  transition: all 0.3s ease;
+  background: var(--color-background);
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.level-indicator.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.2);
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 8px rgba(var(--color-accent-rgb), 0.7));
+  animation: pulse-icon 1s ease infinite alternate;
+}
+
+.skill-xp {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+/* Additional skill indicators below progress bar */
+.skill-indicators {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0 0.25rem;
+}
+
+.level-icons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.level-icon {
+  width: 12px;
+  height: 12px;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+  color: var(--color-text);
+}
+
+.level-icon.active {
+  opacity: 1;
+  transform: scale(1.2);
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 8px rgba(var(--color-accent-rgb), 0.7));
+}
+
+.icon-xp {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Animation for active level indicators */
+@keyframes pulse-icon {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.3);
+    text-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.9);
+  }
 }
 
 /* Responsive design */

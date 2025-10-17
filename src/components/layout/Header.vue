@@ -72,6 +72,13 @@
         </li>
       </ul>
     </nav>
+    
+    <!-- Mobile Menu Backdrop -->
+    <div 
+      v-if="isMobileMenuOpen"
+      class="header__mobile-backdrop"
+      @click="isMobileMenuOpen = false"
+    ></div>
   </header>
 </template>
 
@@ -93,6 +100,21 @@ const navigationSections = NAVIGATION_SECTIONS
 const scrollToSection = (sectionId, event) => {
   event.preventDefault()
   
+  // Close mobile menu first, then scroll after a brief delay
+  if (isMobileMenuOpen.value) {
+    isMobileMenuOpen.value = false
+    
+    // Wait for the menu to close before scrolling
+    setTimeout(() => {
+      scrollToElement(sectionId)
+    }, 300)
+  } else {
+    scrollToElement(sectionId)
+  }
+}
+
+// Helper function to scroll to element
+const scrollToElement = (sectionId) => {
   const element = document.getElementById(sectionId)
   if (element) {
     const headerHeight = 80 // Fixed header height
@@ -102,11 +124,6 @@ const scrollToSection = (sectionId, event) => {
       top: elementPosition,
       behavior: 'smooth'
     })
-  }
-  
-  // Close mobile menu after navigation
-  if (isMobileMenuOpen.value) {
-    isMobileMenuOpen.value = false
   }
 }
 
@@ -322,33 +339,30 @@ onUnmounted(() => {
 
 /* Mobile Navigation */
 .header__nav--mobile {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  max-width: 280px;
+  height: 100vh;
   background: var(--color-background);
-  border-bottom: 1px solid var(--color-border);
-  transform: translateY(-100%);
-  opacity: 0;
-  visibility: hidden;
+  border-left: 1px solid var(--color-border);
   transition: var(--transition-all);
   box-shadow: var(--shadow-lg);
   backdrop-filter: blur(12px);
-  z-index: 999;
+  z-index: 1001;
+  overflow-y: auto;
 }
 
 .header__nav--mobile-open {
-  transform: translateY(0);
-  opacity: 1;
-  visibility: visible;
+  right: 0;
 }
 
 .header__nav-list--mobile {
   flex-direction: column;
   gap: 0;
-  padding: 1.5rem;
-  max-height: calc(100vh - 5rem);
-  overflow-y: auto;
+  padding: 5rem 1.5rem 1.5rem;
+  height: 100%;
 }
 
 .header__nav-list--mobile .header__nav-link {
@@ -361,6 +375,11 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   transition: var(--transition-fast);
+  color: var(--color-text);
+}
+
+.header__nav-list--mobile .header__nav-link:hover {
+  color: var(--color-accent);
 }
 
 .header__nav-list--mobile .header__nav-link:active {
@@ -399,6 +418,21 @@ onUnmounted(() => {
     font-size: 1.125rem;
   }
   
+  /* Disable scrolling on body when mobile menu is open */
+  .header__nav--mobile-open ~ * {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 767px) {
+  .header__container {
+    padding: 0 1rem;
+  }
+  
+  .header__logo-text {
+    font-size: 1.125rem;
+  }
+  
   /* Ensure mobile menu doesn't interfere with content */
   .header__nav--mobile-open ~ * {
     pointer-events: none;
@@ -423,6 +457,26 @@ onUnmounted(() => {
     font-size: 1rem;
     padding: 0.875rem 0;
   }
+}
+
+/* Mobile Menu Backdrop */
+.header__mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-fast);
+  backdrop-filter: blur(2px);
+}
+
+.header__nav--mobile-open ~ .header__mobile-backdrop {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Touch device optimizations */

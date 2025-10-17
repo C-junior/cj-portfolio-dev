@@ -73,6 +73,7 @@ const emit = defineEmits(['click', 'unlock'])
 const { 
   isAchievementUnlocked, 
   getProgressForAchievement,
+  getSkillAchievementProgress,
   trackInteraction,
   visitedSections,
   interactionCount,
@@ -89,6 +90,15 @@ const isUnlocked = computed(() => {
 
 const progressPercentage = computed(() => {
   if (isUnlocked.value) return 100
+  
+  // Check if it's a skill achievement type and use the appropriate function
+  const skillAchievementTypes = ['skill-expert', 'skill-advanced', 'skill-proficient', 
+                                 'skill-expert-count', 'skill-advanced-count', 'skill-proficient-count']
+  
+  if (skillAchievementTypes.includes(props.achievement.type)) {
+    return Math.round(getSkillAchievementProgress(props.achievement.id) * 100)
+  }
+  
   return Math.round(getProgressForAchievement(props.achievement.id) * 100)
 })
 
@@ -111,6 +121,16 @@ const progressText = computed(() => {
       const currentMinutes = Math.floor(current / 60)
       const totalMinutes = Math.floor(total / 60)
       return `${currentMinutes}/${totalMinutes} minutes`
+    case 'skill-expert':
+    case 'skill-advanced':
+    case 'skill-proficient':
+      // For skill achievements, we'll use the generic percentage
+      return `${Math.round(progressPercentage.value)}%`
+    case 'skill-expert-count':
+    case 'skill-advanced-count':
+    case 'skill-proficient-count':
+      current = Math.floor(getProgressForAchievement(props.achievement.id) * total)
+      return `${current}/${total} skills`
     default:
       return `${Math.round(progressPercentage.value)}%`
   }

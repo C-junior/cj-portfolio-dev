@@ -115,9 +115,33 @@
               <div 
                 class="progress-fill"
                 :style="{ width: `${overallProgress}%` }"
-              ></div>
+              >
+                <!-- Level markers -->
+                <div class="level-markers">
+                  <span class="level-marker" style="left: 25%;">Novice</span>
+                  <span class="level-marker" style="left: 50%;">Intermediate</span>
+                  <span class="level-marker" style="left: 75%;">Advanced</span>
+                  <span class="level-marker" style="left: 90%;">Expert</span>
+                </div>
+              </div>
             </div>
             <span class="progress-percentage">{{ overallProgress }}%</span>
+          </div>
+          
+          <!-- Skill level progress -->
+          <div class="skill-level-info">
+            <div class="level-badge" :class="{ 'active': overallProgress >= 25 }">
+              <span class="level-emoji">🌱</span> Novice
+            </div>
+            <div class="level-badge" :class="{ 'active': overallProgress >= 50 }">
+              <span class="level-emoji">⚡</span> Intermediate
+            </div>
+            <div class="level-badge" :class="{ 'active': overallProgress >= 75 }">
+              <span class="level-emoji">🚀</span> Advanced
+            </div>
+            <div class="level-badge" :class="{ 'active': overallProgress >= 90 }">
+              <span class="level-emoji">🏆</span> Expert
+            </div>
           </div>
         </div>
       </div>
@@ -148,7 +172,7 @@ import SkillBar from '@/components/ui/SkillBar.vue'
 import AchievementBadge from '@/components/gamification/AchievementBadge.vue'
 
 // Composables
-const { visitSection, trackInteraction, ACHIEVEMENTS } = useGamification()
+const { visitSection, trackInteraction, trackSkillAchievement, ACHIEVEMENTS } = useGamification()
 
 // Refs
 const skillsSectionRef = ref(null)
@@ -270,6 +294,15 @@ watch(sectionVisible, (visible) => {
     visitSection('skills')
     trackInteraction('skills-section-viewed')
   }
+})
+
+// Track skill achievements when component mounts
+onMounted(() => {
+  // Track all skills when the component loads
+  const allSkills = [...frontendSkills.value, ...designSkills.value, ...toolsSkills.value]
+  allSkills.forEach(skill => {
+    trackSkillAchievement(skill.name, skill.level)
+  })
 })
 </script>
 
@@ -674,6 +707,56 @@ watch(sectionVisible, (visible) => {
   .summary-stats {
     margin-bottom: 1.5rem;
   }
+}
+  
+/* Skill level progress indicators */
+.level-markers {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.level-marker {
+  position: absolute;
+  top: -20px;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.skill-level-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.level-badge {
+  flex: 1;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 8px;
+  background: rgba(var(--color-surface-rgb), 0.3);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.1);
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.level-badge.active {
+  opacity: 1;
+  background: rgba(var(--color-accent-rgb), 0.1);
+  border-color: rgba(var(--color-accent-rgb), 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
+}
+
+.level-emoji {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 /* Touch device optimizations */

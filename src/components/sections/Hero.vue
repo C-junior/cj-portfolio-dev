@@ -253,7 +253,7 @@ onMounted(() => {
 <style scoped>
 .hero-section {
   position: relative;
-  min-height: 100vh;
+  min-height: 100vh; /* Hero section should remain full viewport height */
   display: flex;
   align-items: center;
   justify-content: center;

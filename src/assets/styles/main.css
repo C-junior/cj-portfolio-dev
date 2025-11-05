@@ -16,6 +16,26 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  transition: var(--transition-colors);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  /* Improve text rendering performance */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Prevent any overflow */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100%;
 }
 
 /* Enhanced smooth scrolling for section transitions */
@@ -32,24 +52,14 @@ html {
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
+
+
 .section.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-body {
-  font-family: var(--font-family-primary);
-  line-height: var(--line-height-normal);
-  color: var(--color-text);
-  background-color: var(--color-background);
-  transition: var(--transition-colors);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-normal);
-  /* Improve text rendering performance */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
+
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -169,7 +179,7 @@ button:active {
 
 .section {
   padding: var(--spacing-20) 0;
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   align-items: center;
 }

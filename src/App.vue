@@ -61,19 +61,24 @@ preloadCriticalCSS()
   transition: var(--transition-colors);
   display: flex;
   flex-direction: column;
+  /* Prevent scroll overflow */
+  overflow-x: hidden;
+  /* Ensure no extra space */
+  margin: 0;
+  padding: 0;
 }
 
 .main-content {
   flex: 1;
   padding-top: 5rem; /* Account for fixed header */
-  min-height: calc(100vh - 5rem);
+  /* Remove the min-height that might cause overflow */
+  width: 100%;
 }
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .main-content {
     padding-top: 4.5rem; /* Smaller header on mobile */
-    min-height: calc(100vh - 4.5rem);
   }
 }
 

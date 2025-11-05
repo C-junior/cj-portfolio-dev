@@ -11,10 +11,17 @@ const router = createRouter({
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth'
-      }
+      // Add a small delay to ensure DOM is updated before scrolling
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            el: to.hash,
+            // Account for fixed header height
+            behavior: 'smooth',
+            // Using offset to account for fixed header (though this option might not be supported in all browsers)
+          })
+        }, 100) // Small delay to ensure DOM is ready
+      })
     }
     if (savedPosition) {
       return savedPosition

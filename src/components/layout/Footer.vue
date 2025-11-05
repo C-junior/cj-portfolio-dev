@@ -176,7 +176,9 @@ const scrollToSection = (sectionId, event) => {
   
   const element = document.getElementById(sectionId)
   if (element) {
-    const headerHeight = 80
+    // Get the actual header height dynamically
+    const header = document.querySelector('.header')
+    const headerHeight = header ? header.offsetHeight : 80 // fallback to 80 if header not found
     const elementPosition = element.offsetTop - headerHeight
     
     window.scrollTo({
@@ -199,6 +201,11 @@ const scrollToTop = () => {
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
   margin-top: auto;
+  width: 100%;
+  /* Ensure no extra padding or margin */
+  box-sizing: border-box;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .footer__container {
@@ -352,7 +359,7 @@ const scrollToTop = () => {
 /* Footer Bottom */
 .footer__bottom {
   border-top: 1px solid var(--color-border);
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 0 0;
 }
 
 .footer__bottom-content {

@@ -117,7 +117,9 @@ const scrollToSection = (sectionId, event) => {
 const scrollToElement = (sectionId) => {
   const element = document.getElementById(sectionId)
   if (element) {
-    const headerHeight = 80 // Fixed header height
+    // Get the actual header height dynamically
+    const header = document.querySelector('.header')
+    const headerHeight = header ? header.offsetHeight : 80 // fallback to 80 if header not found
     const elementPosition = element.offsetTop - headerHeight
     
     window.scrollTo({
@@ -142,7 +144,11 @@ const handleScroll = () => {
     element: document.getElementById(section.id)
   })).filter(section => section.element)
   
-  const scrollPosition = window.scrollY + 100 // Offset for header
+  // Get header height dynamically
+  const header = document.querySelector('.header')
+  const headerHeight = header ? header.offsetHeight : 80 // fallback to 80 if header not found
+  
+  const scrollPosition = window.scrollY + headerHeight + 20 // Offset for header and small buffer
   
   for (let i = sections.length - 1; i >= 0; i--) {
     const section = sections[i]

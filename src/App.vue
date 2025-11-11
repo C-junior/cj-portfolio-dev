@@ -5,7 +5,6 @@ import { useLoadingState } from '@/composables/useLoadingState'
 import { usePerformance, useResourceHints } from '@/composables/usePerformance'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import Navigation from '@/components/layout/Navigation.vue'
 import LoadingIndicator from '@/components/ui/LoadingIndicator.vue'
 import ErrorBoundary from '@/components/ui/ErrorBoundary.vue'
 
@@ -36,9 +35,6 @@ preloadCriticalCSS()
     
     <!-- Header with navigation and theme toggle -->
     <Header />
-    
-    <!-- Desktop scroll spy navigation -->
-    <Navigation />
     
     <!-- Main content area -->
     <main class="main-content">

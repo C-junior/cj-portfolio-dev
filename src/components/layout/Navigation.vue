@@ -134,10 +134,8 @@ const updateScrollSpy = () => {
   
   // Get header height dynamically
   const header = document.querySelector('.header')
-  const headerHeight = header ? header.offsetHeight : 80 // fallback to 80 if header not found
+  const headerHeight = header ? header.offsetHeight : 80
   
-  // Calculate scroll position accounting for header height
-  const scrollPosition = window.scrollY + headerHeight + 50 // Extra offset to give some buffer
   const windowHeight = window.innerHeight
   const documentHeight = document.documentElement.scrollHeight
   
@@ -147,18 +145,32 @@ const updateScrollSpy = () => {
     100
   )
   
-  // Find the current active section
-  // We'll find the section that is currently most visible in the viewport
+  // Find the current active section based on which section is most visible in viewport
   let newActiveSection = 'hero' // Default to hero section
-
-  // Look for the section that's currently in the center of the viewport
-  for (let i = sections.length - 1; i >= 0; i--) {
-    const section = sections[i]
-    if (section.element && section.element.offsetTop <= scrollPosition) {
-      newActiveSection = section.id
-      break
+  let maxVisibleArea = 0
+  
+  sections.forEach(section => {
+    if (section.element) {
+      const rect = section.element.getBoundingClientRect()
+      
+      // Calculate how much of the section is visible in the viewport
+      const visibleTop = Math.max(rect.top, headerHeight)
+      const visibleBottom = Math.min(rect.bottom, windowHeight)
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop)
+      
+      // If this section has more visible area than previous ones, it's the active one
+      if (visibleHeight > maxVisibleArea) {
+        maxVisibleArea = visibleHeight
+        newActiveSection = section.id
+      }
+      
+      // Mark section as visited if it's in viewport
+      const isVisible = rect.top <= (windowHeight * 0.75) && rect.bottom >= (windowHeight * 0.25)
+      if (isVisible && !visitedSections.value.includes(section.id)) {
+        visitedSections.value.push(section.id)
+      }
     }
-  }
+  })
   
   // Update active section
   if (activeSection.value !== newActiveSection) {
@@ -169,19 +181,6 @@ const updateScrollSpy = () => {
       visitedSections.value.push(newActiveSection)
     }
   }
-  
-  // Check if sections are in viewport and mark as visited
-  sections.forEach(section => {
-    if (section.element) {
-      // Use getBoundingClientRect to check if section is in view
-      const rect = section.element.getBoundingClientRect()
-      const isVisible = rect.top <= (window.innerHeight * 0.75) && rect.bottom >= (window.innerHeight * 0.25)
-      
-      if (isVisible && !visitedSections.value.includes(section.id)) {
-        visitedSections.value.push(section.id)
-      }
-    }
-  })
 }
 
 const handleScroll = () => {
@@ -219,7 +218,8 @@ defineExpose({
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: 1rem;
-  transition: var(--transition-all);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   max-height: 80vh;
   overflow-y: auto;
 }

@@ -96,14 +96,31 @@ const scrollToSection = (sectionId, event) => {
     const header = document.querySelector('.header')
     const headerHeight = header ? header.offsetHeight : 80 // fallback to 80 if header not found
     
-    // Calculate the position relative to the top of the page
-    const elementPosition = element.offsetTop - headerHeight
+    // Use getBoundingClientRect for accurate positioning
+    const yOffset = -headerHeight
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
     
     // Scroll to the calculated position
     window.scrollTo({
-      top: elementPosition,
+      top: y,
       behavior: 'smooth'
     })
+  } else {
+    // If element not found, try again after a short delay (for lazy-loaded sections)
+    setTimeout(() => {
+      const retryElement = document.getElementById(sectionId)
+      if (retryElement) {
+        const header = document.querySelector('.header')
+        const headerHeight = header ? header.offsetHeight : 80
+        const yOffset = -headerHeight
+        const y = retryElement.getBoundingClientRect().top + window.pageYOffset + yOffset
+        
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        })
+      }
+    }, 100)
   }
 }
 

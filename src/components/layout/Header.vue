@@ -120,12 +120,31 @@ const scrollToElement = (sectionId) => {
     // Get the actual header height dynamically
     const header = document.querySelector('.header')
     const headerHeight = header ? header.offsetHeight : 80 // fallback to 80 if header not found
-    const elementPosition = element.offsetTop - headerHeight
+    
+    // Use scrollIntoView for better compatibility
+    const yOffset = -headerHeight
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
     
     window.scrollTo({
-      top: elementPosition,
+      top: y,
       behavior: 'smooth'
     })
+  } else {
+    // If element not found, try again after a short delay (for lazy-loaded sections)
+    setTimeout(() => {
+      const retryElement = document.getElementById(sectionId)
+      if (retryElement) {
+        const header = document.querySelector('.header')
+        const headerHeight = header ? header.offsetHeight : 80
+        const yOffset = -headerHeight
+        const y = retryElement.getBoundingClientRect().top + window.pageYOffset + yOffset
+        
+        window.scrollTo({
+          top: y,
+          behavior: 'smooth'
+        })
+      }
+    }, 100)
   }
 }
 

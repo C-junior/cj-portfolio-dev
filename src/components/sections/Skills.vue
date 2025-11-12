@@ -24,12 +24,6 @@
               <span class="category-icon">💻</span>
               Frontend Development
             </h3>
-            <AchievementBadge 
-              v-if="frontendAchievement"
-              :achievement="frontendAchievement"
-              :show-progress="false"
-              class="category-badge"
-            />
           </div>
           <div class="skills-list">
             <SkillBar
@@ -48,12 +42,6 @@
               <span class="category-icon">🎨</span>
               Design & UI/UX
             </h3>
-            <AchievementBadge 
-              v-if="designAchievement"
-              :achievement="designAchievement"
-              :show-progress="false"
-              class="category-badge"
-            />
           </div>
           <div class="skills-list">
             <SkillBar
@@ -72,12 +60,6 @@
               <span class="category-icon">🛠️</span>
               Tools & Technologies
             </h3>
-            <AchievementBadge 
-              v-if="toolsAchievement"
-              :achievement="toolsAchievement"
-              :show-progress="false"
-              class="category-badge"
-            />
           </div>
           <div class="skills-list">
             <SkillBar
@@ -146,30 +128,17 @@
         </div>
       </div>
 
-      <!-- Achievement Showcase -->
-      <div v-if="skillAchievements.length > 0" class="achievements-showcase">
-        <h4 class="achievements-title">Skill Achievements</h4>
-        <div class="achievements-grid">
-          <AchievementBadge
-            v-for="achievement in skillAchievements"
-            :key="achievement.id"
-            :achievement="achievement"
-            :show-progress="true"
-            @click="handleAchievementClick"
-          />
-        </div>
-      </div>
+
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
 import { useGamification } from '@/composables/useGamification'
 import { USER_PROFILE } from '@/utils/constants'
 import SkillBar from '@/components/ui/SkillBar.vue'
-import AchievementBadge from '@/components/gamification/AchievementBadge.vue'
 
 // Composables
 const { visitSection, trackInteraction, trackSkillAchievement, ACHIEVEMENTS } = useGamification()
@@ -217,60 +186,7 @@ const overallProgress = computed(() => {
   return Math.min(averageLevel.value, 100)
 })
 
-// Achievement definitions for skills
-const skillAchievements = computed(() => {
-  return [
-    {
-      id: 'frontend-master',
-      title: 'Frontend Master',
-      description: 'Achieved expert level in frontend technologies',
-      icon: '🚀',
-      threshold: 90,
-      type: 'skill-level',
-      category: 'frontend'
-    },
-    {
-      id: 'design-guru',
-      title: 'Design Guru',
-      description: 'Mastered design and UI/UX principles',
-      icon: '🎯',
-      threshold: 85,
-      type: 'skill-level',
-      category: 'design'
-    },
-    {
-      id: 'tool-expert',
-      title: 'Tool Expert',
-      description: 'Proficient with development tools',
-      icon: '⚡',
-      threshold: 80,
-      type: 'skill-level',
-      category: 'tools'
-    }
-  ]
-})
 
-// Category achievements
-const frontendAchievement = computed(() => {
-  const avgLevel = frontendSkills.value.reduce((sum, skill) => sum + skill.level, 0) / frontendSkills.value.length
-  return avgLevel >= 85 ? skillAchievements.value.find(a => a.id === 'frontend-master') : null
-})
-
-const designAchievement = computed(() => {
-  const avgLevel = designSkills.value.reduce((sum, skill) => sum + skill.level, 0) / designSkills.value.length
-  return avgLevel >= 85 ? skillAchievements.value.find(a => a.id === 'design-guru') : null
-})
-
-const toolsAchievement = computed(() => {
-  const avgLevel = toolsSkills.value.reduce((sum, skill) => sum + skill.level, 0) / toolsSkills.value.length
-  return avgLevel >= 80 ? skillAchievements.value.find(a => a.id === 'tool-expert') : null
-})
-
-// Methods
-const handleAchievementClick = (achievement) => {
-  trackInteraction('skill-achievement-click')
-  // Could emit event or show modal with achievement details
-}
 
 // Watch for section visibility
 const { target: intersectionTarget, isVisible: sectionVisible } = useIntersectionObserver({
@@ -288,7 +204,6 @@ onMounted(() => {
 })
 
 // Watch for visibility changes
-import { watch } from 'vue'
 watch(sectionVisible, (visible) => {
   if (visible) {
     visitSection('skills')
@@ -422,9 +337,7 @@ onMounted(() => {
   font-size: 1.75rem;
 }
 
-.category-badge {
-  transform: scale(0.8);
-}
+
 
 .skills-list {
   display: flex;
@@ -536,22 +449,7 @@ onMounted(() => {
   min-width: 50px;
 }
 
-.achievements-showcase {
-  text-align: center;
-}
 
-.achievements-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin: 0 0 2rem 0;
-}
-
-.achievements-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
 
 /* Animations */
 @keyframes shimmer {
@@ -639,10 +537,7 @@ onMounted(() => {
     font-size: 0.75rem;
   }
   
-  .achievements-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+
   
   .skills-summary {
     padding: 1.5rem;

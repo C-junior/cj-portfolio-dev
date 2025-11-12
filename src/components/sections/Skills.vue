@@ -21,7 +21,9 @@
         <div class="skill-category">
           <div class="category-header">
             <h3 class="category-title">
-              <span class="category-icon">💻</span>
+              <span class="category-icon">
+                <CodeIcon :size="24" />
+              </span>
               Frontend Development
             </h3>
           </div>
@@ -39,7 +41,9 @@
         <div class="skill-category">
           <div class="category-header">
             <h3 class="category-title">
-              <span class="category-icon">🎨</span>
+              <span class="category-icon">
+                <PaletteIcon :size="24" />
+              </span>
               Design & UI/UX
             </h3>
           </div>
@@ -57,7 +61,9 @@
         <div class="skill-category">
           <div class="category-header">
             <h3 class="category-title">
-              <span class="category-icon">🛠️</span>
+              <span class="category-icon">
+                <HammerIcon :size="24" />
+              </span>
               Tools & Technologies
             </h3>
           </div>
@@ -113,16 +119,24 @@
           <!-- Skill level progress -->
           <div class="skill-level-info">
             <div class="level-badge" :class="{ 'active': overallProgress >= 25 }">
-              <span class="level-emoji">🌱</span> Novice
+              <span class="level-emoji">
+                <SproutIcon :size="16" />
+              </span> Novice
             </div>
             <div class="level-badge" :class="{ 'active': overallProgress >= 50 }">
-              <span class="level-emoji">⚡</span> Intermediate
+              <span class="level-emoji">
+                <ZapIcon :size="16" />
+              </span> Intermediate
             </div>
             <div class="level-badge" :class="{ 'active': overallProgress >= 75 }">
-              <span class="level-emoji">🚀</span> Advanced
+              <span class="level-emoji">
+                <RocketIcon :size="16" />
+              </span> Advanced
             </div>
             <div class="level-badge" :class="{ 'active': overallProgress >= 90 }">
-              <span class="level-emoji">🏆</span> Expert
+              <span class="level-emoji">
+                <TrophyIcon :size="16" />
+              </span> Expert
             </div>
           </div>
         </div>

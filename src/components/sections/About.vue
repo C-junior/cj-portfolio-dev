@@ -142,7 +142,9 @@
           </h3>
           <div class="awards-grid">
             <div class="award-item">
-              <div class="award-medal">🥉</div>
+              <div class="award-medal">
+                <MedalIcon :size="48" class="bronze-medal" />
+              </div>
               <div class="award-content">
                 <h4 class="award-title">3rd Place - InovaUni Hackathon</h4>
                 <p class="award-year">2025</p>
@@ -151,7 +153,9 @@
             </div>
 
             <div class="award-item">
-              <div class="award-medal">🥇</div>
+              <div class="award-medal">
+                <MedalIcon :size="48" class="gold-medal" />
+              </div>
               <div class="award-content">
                 <h4 class="award-title">1st Place - Startup Weekend Sebrae</h4>
                 <p class="award-year">2018</p>
@@ -648,10 +652,19 @@ const handleImageLoad = (event) => {
 }
 
 .award-medal {
-  font-size: 3rem;
   flex-shrink: 0;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.bronze-medal {
+  color: #CD7F32; /* Bronze color */
+}
+
+.gold-medal {
+  color: #FFD700; /* Gold color */
 }
 
 .award-content {

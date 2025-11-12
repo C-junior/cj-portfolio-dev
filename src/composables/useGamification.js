@@ -21,7 +21,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.EXPLORER,
     title: 'Explorer',
     description: 'Visited your first section',
-    icon: '🗺️',
+    icon: 'MapIcon',
     threshold: 1,
     type: 'sections'
   },
@@ -29,7 +29,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.COMPLETIONIST,
     title: 'Completionist',
     description: 'Explored all sections',
-    icon: '🏆',
+    icon: 'TrophyIcon',
     threshold: NAVIGATION_SECTIONS.length,
     type: 'sections'
   },
@@ -37,7 +37,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.CURIOUS,
     title: 'Curious Mind',
     description: 'Made 10 interactions',
-    icon: '🔍',
+    icon: 'SearchIcon',
     threshold: 10,
     type: 'interactions'
   },
@@ -45,7 +45,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.ENGAGED,
     title: 'Engaged Visitor',
     description: 'Spent 2 minutes exploring',
-    icon: '⏰',
+    icon: 'ClockIcon',
     threshold: 120, // 2 minutes in seconds
     type: 'time'
   },
@@ -53,7 +53,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.SKILL_MASTER,
     title: 'Skill Master',
     description: 'Achieved expertise in multiple skills',
-    icon: '🥇',
+    icon: 'AwardIcon',
     threshold: 5, // Number of skills at expert level (90%+)
     type: 'skill-expert-count'
   },
@@ -61,7 +61,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.SKILL_EXPERT,
     title: 'Skill Expert',
     description: 'Reached expert level in a skill',
-    icon: '⭐',
+    icon: 'StarIcon',
     threshold: 90, // Skill level percentage
     type: 'skill-expert'
   },
@@ -69,7 +69,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.SKILL_ADVANCED,
     title: 'Advanced Skill',
     description: 'Achieved advanced level in a skill',
-    icon: '✨',
+    icon: 'SparklesIcon',
     threshold: 80, // Skill level percentage
     type: 'skill-advanced'
   },
@@ -77,7 +77,7 @@ export const ACHIEVEMENTS = {
     id: ACHIEVEMENT_TYPES.SKILL_PROFICIENT,
     title: 'Proficient Skill',
     description: 'Achieved proficiency in a skill',
-    icon: '🎯',
+    icon: 'TargetIcon',
     threshold: 70, // Skill level percentage
     type: 'skill-proficient'
   }
@@ -246,7 +246,7 @@ export function useGamification() {
       id: achievementId,
       title,
       description,
-      icon: '🎉',
+      icon: 'PartyPopperIcon',
       unlockedAt: Date.now()
     }
     

@@ -34,7 +34,7 @@
             :style="{ left: level.position + '%' }"
             :title="getLevelName(level.threshold)"
           >
-            {{ level.icon }}
+            <component :is="level.icon" :size="12" />
           </span>
         </div>
         <div class="skill-bar__glow"></div>
@@ -54,7 +54,7 @@
           class="level-icon" 
           :class="{ 'active': animatedLevel >= level.threshold }" 
         >
-          {{ level.icon }}
+          <component :is="level.icon" :size="10" />
         </span>
       </div>
       <span class="icon-xp">{{ Math.floor(animatedLevel * 10) }} XP</span>
@@ -207,11 +207,11 @@ const getLevelDescription = (level) => {
 
 // Define skill level thresholds for gamification
 const levelThresholds = computed(() => [
-  { threshold: 20, position: 20, icon: '🌱', name: 'Beginner' }, // Beginner
-  { threshold: 40, position: 40, icon: '⭐', name: 'Novice' }, // Novice
-  { threshold: 60, position: 60, icon: '⚡', name: 'Intermediate' }, // Intermediate
-  { threshold: 80, position: 80, icon: '🔥', name: 'Advanced' }, // Advanced
-  { threshold: 90, position: 90, icon: '🎯', name: 'Expert' }  // Expert
+  { threshold: 20, position: 20, icon: 'SproutIcon', name: 'Beginner' }, // Beginner
+  { threshold: 40, position: 40, icon: 'StarIcon', name: 'Novice' }, // Novice
+  { threshold: 60, position: 60, icon: 'ZapIcon', name: 'Intermediate' }, // Intermediate
+  { threshold: 80, position: 80, icon: 'FlameIcon', name: 'Advanced' }, // Advanced
+  { threshold: 90, position: 90, icon: 'TargetIcon', name: 'Expert' }  // Expert
 ])
 
 // Get level name for title attribute

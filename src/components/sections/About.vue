@@ -132,6 +132,35 @@
           </div>
         </div>
 
+        <!-- Awards & Recognition -->
+        <div class="awards-section">
+          <h3 class="awards-title">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            Awards & Recognition
+          </h3>
+          <div class="awards-grid">
+            <div class="award-item">
+              <div class="award-medal">🥉</div>
+              <div class="award-content">
+                <h4 class="award-title">3rd Place - InovaUni Hackathon</h4>
+                <p class="award-year">2025</p>
+                <p class="award-description">Recognized for innovative solutions and technical excellence in university innovation competition.</p>
+              </div>
+            </div>
+
+            <div class="award-item">
+              <div class="award-medal">🥇</div>
+              <div class="award-content">
+                <h4 class="award-title">1st Place - Startup Weekend Sebrae</h4>
+                <p class="award-year">2018</p>
+                <p class="award-description">Won first place in entrepreneurship competition, demonstrating business acumen and innovation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Additional Info -->
         <div class="about-highlights">
           <div class="highlight-item">
@@ -557,13 +586,109 @@ const handleImageLoad = (event) => {
   color: var(--color-accent);
 }
 
+.awards-section {
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+}
+
+.awards-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2rem;
+}
+
+.awards-title svg {
+  color: var(--color-accent);
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.award-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: var(--color-surface);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.award-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--color-accent), var(--color-primary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.award-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.2);
+}
+
+.award-item:hover::before {
+  opacity: 1;
+}
+
+.award-medal {
+  font-size: 3rem;
+  flex-shrink: 0;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.award-content {
+  flex: 1;
+}
+
+.award-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+}
+
+.award-year {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin: 0 0 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.award-description {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
 .about-highlights {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s;
 }
 
 .highlight-item {
@@ -620,6 +745,11 @@ const handleImageLoad = (event) => {
   transform: translateX(0);
 }
 
+.about-section.is-visible .awards-section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .about-section.is-visible .about-highlights {
   opacity: 1;
   transform: translateY(0);
@@ -666,6 +796,27 @@ const handleImageLoad = (event) => {
     transform: none;
   }
 
+  .awards-section {
+    margin-bottom: 2rem;
+  }
+
+  .awards-title {
+    font-size: 1.5rem;
+  }
+
+  .awards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .award-item {
+    padding: 1.5rem;
+  }
+
+  .award-medal {
+    font-size: 2.5rem;
+  }
+
   .about-highlights {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -706,6 +857,24 @@ const handleImageLoad = (event) => {
     flex-direction: column;
     text-align: center;
     gap: 0.75rem;
+  }
+
+  .awards-title {
+    font-size: 1.25rem;
+  }
+
+  .award-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .award-medal {
+    font-size: 2rem;
+  }
+
+  .award-title {
+    font-size: 1rem;
   }
 
   .highlight-item {

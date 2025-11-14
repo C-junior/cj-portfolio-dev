@@ -145,50 +145,54 @@ export const PROJECTS = [
   },
   {
     id: 2,
-    title: "ATI Government Portal",
+    title: "Agrotins 2025 - Agricultural Technology Fair",
     description:
-      "Modern government services portal for Tocantins Technology Agency with improved accessibility and user experience.",
-    image: "/images/projects/ati-portal.svg",
-    technologies: ["Vue.js", "JavaScript", "CSS3", "Figma"],
+      "Digital platform for Agrotins 2025, the largest agricultural technology fair in Northern Brazil celebrating 25 years with over 200,000 expected visitors and R$ 4.2 billion in business projections.",
+    image: "/images/projects/agrotins.png",
+    technologies: ["Vue.js", "JavaScript", "CSS3", "Figma", "API Integration"],
     category: "Web Development",
     status: "Completed",
-    year: "2024",
+    year: "2025",
     features: [
       "Responsive design for all devices",
-      "WCAG 2.1 accessibility compliance",
-      "Performance optimization",
-      "Modern UI/UX design",
-      "Government service integration",
+      "Event management and scheduling system",
+      "Exhibitor and visitor information portal",
+      "Technology showcase platform",
+      "Business networking capabilities",
+      "Real-time event updates and notifications"
     ],
     links: {
-      demo: "https://ati.to.gov.br", // Update with actual link
+      demo: "https://agrotins.to.gov.br", // Official Agrotins website
       github: "#", // Add if available
     },
   },
   {
     id: 3,
-    title: "Government Dashboard Analytics",
+    title: "Hydrocultivo AI - Intelligent Irrigation Management Assistant",
     description:
-      "Real-time data visualization dashboard for monitoring government services and citizen engagement metrics.",
-    image: "/images/projects/dashboard.svg",
-    technologies: ["Vue.js", "Chart.js", "JavaScript", "CSS3"],
-    category: "Data Visualization",
+      "Advanced AI-powered chat agent that helps farmers optimize irrigation management by automatically retrieving climate data via API integration. The system provides intelligent recommendations for efficient water usage, crop scheduling, and irrigation timing based on real-time weather forecasts and historical data.",
+    image: "/images/projects/hydrocultivoai.png",
+    technologies: ["Vue.js", "AI/ML", "API Integration", "JavaScript", "CSS3", "Node.js"],
+    category: "AI Solutions",
     status: "Completed",
-    year: "2023",
+    year: "2024",
     features: [
-      "Real-time data updates",
-      "Interactive charts and graphs",
-      "Responsive grid layout",
-      "Export functionality",
-      "Multi-department integration",
+      "Intelligent AI chat interface for farmers",
+      "Automatic climate data retrieval via API",
+      "Personalized irrigation recommendations",
+      "Real-time weather integration",
+      "Crop-specific water management advice",
+      "Historical data analysis for optimization",
+      "Mobile-responsive design for field use",
+      "Multi-language support for accessibility"
     ],
     links: {
-      demo: "#", // Update with actual link
-      github: "#",
+      demo: "#", // Add actual demo link
+      github: "#", // Add if available
     },
   },
   {
-    id: 3,
+    id: 4,
     title: "Citizen Services Platform",
     description:
       "Digital platform for citizens to access government services online with document management and appointment scheduling.",
@@ -210,7 +214,7 @@ export const PROJECTS = [
     },
   },
   {
-    id: 4,
+    id: 5,
     title: "Internal Management System",
     description:
       "Comprehensive internal management system for government employees with workflow automation and reporting.",
@@ -232,7 +236,7 @@ export const PROJECTS = [
     },
   },
   {
-    id: 5,
+    id: 6,
     title: "Digital Forms Builder",
     description:
       "Dynamic form builder for creating government forms with validation, conditional logic, and data export capabilities.",
@@ -254,7 +258,7 @@ export const PROJECTS = [
     },
   },
   {
-    id: 6,
+    id: 7,
     title: "Personal Portfolio Website",
     description:
       "Modern portfolio website showcasing projects and skills with gamification elements and smooth animations.",

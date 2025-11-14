@@ -187,8 +187,11 @@ const scrollToSection = (sectionId, event) => {
       behavior: 'smooth'
     })
   } else {
-    // If element not found, try again after a short delay (for lazy-loaded sections)
-    setTimeout(() => {
+    // Trigger lazy loading by scrolling down progressively
+    const startTime = Date.now()
+    const maxWaitTime = 5000
+
+    const checkForElement = () => {
       const retryElement = document.getElementById(sectionId)
       if (retryElement) {
         const header = document.querySelector('.header')
@@ -200,8 +203,24 @@ const scrollToSection = (sectionId, event) => {
           top: y,
           behavior: 'smooth'
         })
+      } else if (Date.now() - startTime < maxWaitTime) {
+        // Scroll down more to trigger lazy loading
+        const currentScroll = window.pageYOffset
+        const documentHeight = document.documentElement.scrollHeight
+        const windowHeight = window.innerHeight
+        
+        if (currentScroll + windowHeight < documentHeight) {
+          window.scrollBy({
+            top: windowHeight * 0.8,
+            behavior: 'auto'
+          })
+        }
+        
+        setTimeout(checkForElement, 150)
       }
-    }, 100)
+    }
+
+    checkForElement()
   }
 }
 

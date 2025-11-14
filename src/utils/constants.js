@@ -24,8 +24,8 @@ export const USER_PROFILE = {
         degreePortuguese: "Curso Técnico em Informática",
         institution: "IFTO - Instituto Federal do Tocantins",
         status: "Completed",
-        startYear: "2004",
-        endYear: "2006",
+        startYear: "2006",
+        endYear: "2008",
         duration: "2 years",
       }
     ]

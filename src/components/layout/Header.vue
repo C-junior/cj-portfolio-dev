@@ -96,55 +96,151 @@ const activeSection = ref('hero')
 const userProfile = USER_PROFILE
 const navigationSections = NAVIGATION_SECTIONS
 
-// Smooth scroll to section
-const scrollToSection = (sectionId, event) => {
-  event.preventDefault()
-  
-  // Close mobile menu first, then scroll after a brief delay
-  if (isMobileMenuOpen.value) {
-    isMobileMenuOpen.value = false
-    
-    // Wait for the menu to close before scrolling
-    setTimeout(() => {
-      scrollToElement(sectionId)
-    }, 300)
-  } else {
-    scrollToElement(sectionId)
-  }
-}
-
-// Helper function to scroll to element
+// Function to ensure element exists before scrolling
 const scrollToElement = (sectionId) => {
+  // Try to find the target element immediately
   const element = document.getElementById(sectionId)
   if (element) {
-    // Get the actual header height dynamically
+    // Element exists, scroll directly to it
     const header = document.querySelector('.header')
-    const headerHeight = header ? header.offsetHeight : 80 // fallback to 80 if header not found
-    
-    // Use scrollIntoView for better compatibility
-    const yOffset = -headerHeight
-    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
-    
+    const headerHeight = header ? header.offsetHeight : 80
+    const y = element.getBoundingClientRect().top + window.pageYOffset - headerHeight
+
     window.scrollTo({
       top: y,
       behavior: 'smooth'
     })
   } else {
-    // If element not found, try again after a short delay (for lazy-loaded sections)
-    setTimeout(() => {
-      const retryElement = document.getElementById(sectionId)
-      if (retryElement) {
+    // Element doesn't exist, trigger lazy loading by scrolling down progressively
+    const startTime = Date.now()
+    const maxWaitTime = 5000 // 5 seconds max wait time
+
+    const checkForElement = () => {
+      const elementCheck = document.getElementById(sectionId)
+      if (elementCheck) {
+        // Element is now available, scroll to it
         const header = document.querySelector('.header')
         const headerHeight = header ? header.offsetHeight : 80
-        const yOffset = -headerHeight
-        const y = retryElement.getBoundingClientRect().top + window.pageYOffset + yOffset
-        
+        const y = elementCheck.getBoundingClientRect().top + window.pageYOffset - headerHeight
+
         window.scrollTo({
           top: y,
           behavior: 'smooth'
         })
+      } else if (Date.now() - startTime < maxWaitTime) {
+        // Element still not loaded, scroll down more to trigger lazy loading
+        const currentScroll = window.pageYOffset
+        const documentHeight = document.documentElement.scrollHeight
+        const windowHeight = window.innerHeight
+        
+        if (currentScroll + windowHeight < documentHeight) {
+          window.scrollBy({
+            top: windowHeight * 0.8,
+            behavior: 'auto'
+          })
+        }
+        
+        // Wait and check again
+        setTimeout(checkForElement, 150)
       }
-    }, 100)
+    }
+
+    // Start the check process
+    checkForElement()
+  }
+}
+
+// Smooth scroll to section
+const scrollToSection = (sectionId, event) => {
+  // Close mobile menu first
+  if (isMobileMenuOpen.value) {
+    isMobileMenuOpen.value = false
+
+    // Wait for the menu to close before proceeding
+    setTimeout(() => {
+      handleScrollToSection(sectionId)
+    }, 300)
+  } else {
+    handleScrollToSection(sectionId)
+  }
+}
+
+// Separate function to handle the actual scrolling logic
+const handleScrollToSection = (sectionId) => {
+  // Try to find the target element immediately
+  const element = document.getElementById(sectionId)
+  if (element) {
+    // Element exists, scroll directly to it
+    const header = document.querySelector('.header')
+    const headerHeight = header ? header.offsetHeight : 80
+    const y = element.getBoundingClientRect().top + window.pageYOffset - headerHeight
+
+    window.scrollTo({
+      top: y,
+      behavior: 'smooth'
+    })
+  } else {
+    // Element doesn't exist, which means it's in a lazy-loaded component
+    // First, we need to make sure the component loads
+    // Find all lazy components and check if any might contain our target
+    const lazyComponents = document.querySelectorAll('.lazy-component')
+
+    // Since we can't directly control the IntersectionObserver, we'll try to
+    // trigger loading by scrolling to approximately where the sections would be
+    // and then check again for the element
+
+    // First, let's try to scroll to the content area to trigger loading
+    const contentSections = document.querySelector('.content-sections')
+    if (contentSections) {
+      // Trigger a scroll to bring sections into view to activate IntersectionObserver
+      const contentTop = contentSections.getBoundingClientRect().top + window.pageYOffset
+      const header = document.querySelector('.header')
+      const headerHeight = header ? header.offsetHeight : 80
+
+      window.scrollTo({
+        top: contentTop - headerHeight,
+        behavior: 'smooth'
+      })
+
+      // After a brief delay to allow potential loading, try again
+      setTimeout(() => {
+        // Now check again if the element exists
+        const elementCheck = document.getElementById(sectionId)
+        if (elementCheck) {
+          // Element is now available, scroll to it
+          const finalY = elementCheck.getBoundingClientRect().top + window.pageYOffset - headerHeight
+          window.scrollTo({
+            top: finalY,
+            behavior: 'smooth'
+          })
+        } else {
+          // If still not loaded, use a longer check cycle
+          let attempts = 0
+          const maxAttempts = 30 // Up to 3 seconds (30 * 100ms)
+
+          const checkForElement = () => {
+            attempts++
+            const elementRetry = document.getElementById(sectionId)
+            if (elementRetry) {
+              // Element is now available, scroll to it
+              const header = document.querySelector('.header')
+              const headerHeight = header ? header.offsetHeight : 80
+              const y = elementRetry.getBoundingClientRect().top + window.pageYOffset - headerHeight
+
+              window.scrollTo({
+                top: y,
+                behavior: 'smooth'
+              })
+            } else if (attempts < maxAttempts) {
+              setTimeout(checkForElement, 100) // Try again in 100ms
+            }
+            // If max attempts reached and still not found, give up
+          }
+
+          checkForElement()
+        }
+      }, 300) // Wait 300ms to allow initial loading
+    }
   }
 }
 

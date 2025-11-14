@@ -289,72 +289,7 @@ export const PROJECTS = [
       github: "#",
     },
   },
-  {
-    id: 9,
-    title: "Internal Management System",
-    description:
-      "Comprehensive internal management system for government employees with workflow automation and reporting.",
-    image: "/images/projects/management-system.svg",
-    technologies: ["Vue.js", "JavaScript", "CSS3", "Workflow Engine"],
-    category: "Enterprise Software",
-    status: "Completed",
-    year: "2022",
-    features: [
-      "Workflow automation",
-      "Employee management",
-      "Report generation",
-      "Role-based access control",
-      "Integration with existing systems",
-    ],
-    links: {
-      demo: "#", // Internal system
-      github: "#",
-    },
-  },
-  {
-    id: 10,
-    title: "Digital Forms Builder",
-    description:
-      "Dynamic form builder for creating government forms with validation, conditional logic, and data export capabilities.",
-    image: "/images/projects/forms-builder.svg",
-    technologies: ["Vue.js", "JavaScript", "CSS3", "Form Engine"],
-    category: "Form Builder",
-    status: "Completed",
-    year: "2022",
-    features: [
-      "Drag-and-drop form builder",
-      "Conditional logic support",
-      "Data validation rules",
-      "Export to multiple formats",
-      "Integration with databases",
-    ],
-    links: {
-      demo: "#",
-      github: "#",
-    },
-  },
-  {
-    id: 11,
-    title: "Personal Portfolio Website",
-    description:
-      "Modern portfolio website showcasing projects and skills with gamification elements and smooth animations.",
-    image: "/images/projects/portfolio.svg",
-    technologies: ["Vue.js", "CSS3", "JavaScript", "Figma"],
-    category: "Portfolio",
-    status: "In Progress",
-    year: "2024",
-    features: [
-      "Gamification elements",
-      "Dark/Light theme toggle",
-      "Smooth animations",
-      "Responsive design",
-      "Performance optimized",
-    ],
-    links: {
-      demo: "#", // This portfolio
-      github: "https://github.com/cristovao-junior", // Update with your GitHub
-    },
-  },
+  
 ];
 
 // Technology categories for filtering

@@ -1,8 +1,8 @@
 // User profile data
 export const USER_PROFILE = {
   name: {
-    full: "Cristovão Rodrigues de Carvalho Junior",
-    display: "Cristovão Junior",
+    full: "Cristovao Rodrigues de Carvalho Junior",
+    display: "Cristovao Junior",
   },
   role: "Front-end Developer",
   photo: "/images/profile-photo.png", // Add your photo here

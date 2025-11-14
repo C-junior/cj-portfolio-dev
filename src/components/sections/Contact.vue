@@ -42,8 +42,8 @@
                 </div>
                 <h3>Email</h3>
               </div>
-              <a href="mailto:cristovao.junior@example.com" class="contact-link">
-                cristovao.junior@example.com
+              <a href="mailto:ti.juniorc@gmail.com" class="contact-link">
+                ti.juniorc@gmail.com
               </a>
             </div>
 
@@ -56,8 +56,8 @@
                 </div>
                 <h3>Phone</h3>
               </div>
-              <a href="tel:+5563999999999" class="contact-link">
-                +55 (63) 99999-9999
+              <a href="tel:+55981089718" class="contact-link">
+                +55 (63) 98108-9718
               </a>
             </div>
 
@@ -65,9 +65,9 @@
             <div class="social-section">
               <h3 class="social-title">Connect With Me</h3>
               <div class="social-links">
-                <a 
-                  href="https://linkedin.com/in/cristovao-junior" 
-                  target="_blank" 
+                <a
+                  href="https://www.linkedin.com/in/juniorcristovao"
+                  target="_blank"
                   rel="noopener noreferrer"
                   class="social-link linkedin"
                   aria-label="LinkedIn Profile"
@@ -77,9 +77,9 @@
                   </svg>
                 </a>
 
-                <a 
-                  href="https://github.com/cristovao-junior" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/C-junior"
+                  target="_blank"
                   rel="noopener noreferrer"
                   class="social-link github"
                   aria-label="GitHub Profile"

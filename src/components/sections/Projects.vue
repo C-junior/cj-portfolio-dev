@@ -318,7 +318,7 @@ export default {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
@@ -381,7 +381,7 @@ export default {
 
 @media (max-width: 768px) {
   .section-title { font-size: var(--font-size-3xl); }
-  .grid-container { 
+  .grid-container {
     grid-template-columns: 1fr;
     gap: 1rem;
   }

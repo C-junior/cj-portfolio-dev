@@ -13,11 +13,22 @@ export const USER_PROFILE = {
       degree: "Technology in Systems Analysis and Development",
       degreePortuguese:
         "Tecnologia em Análise e Desenvolvimento de Sistemas (TADS)",
-      institution: "University Name", // You can update this with your actual university
+      institution: "UNITINS - Universidade de Tocantins", // Your actual university
       status: "In Progress",
       startYear: "2023", // Update with actual year
       expectedGraduation: "2025", // Update with actual year
     },
+    past: [
+      {
+        degree: "Technical Course in Computer Science",
+        degreePortuguese: "Curso Técnico em Informática",
+        institution: "IFTO - Instituto Federal do Tocantins",
+        status: "Completed",
+        startYear: "2004",
+        endYear: "2006",
+        duration: "2 years",
+      }
+    ]
   },
   experience: {
     total: 5,

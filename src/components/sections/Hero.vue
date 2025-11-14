@@ -184,42 +184,22 @@ const generateParticles = () => {
   }
 };
 
-// Smooth scroll to section with lazy-load support
+// Smooth scroll to section
 const scrollToSection = (sectionId) => {
-  const attemptScroll = (retries = 0) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const header = document.querySelector('.header');
-      const headerHeight = header ? header.offsetHeight : 80;
-      const yOffset = -headerHeight;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      
-      window.scrollTo({
-        top: y,
-        behavior: "smooth",
-      });
-      // Track interaction when button is clicked
-      trackInteraction(`cta-${sectionId}`);
-    } else if (retries < 30) {
-      // If section not found, scroll down progressively to trigger lazy loading
-      const currentScroll = window.pageYOffset;
-      const documentHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
-      
-      // Scroll down more aggressively to load sections
-      if (currentScroll + windowHeight < documentHeight) {
-        window.scrollBy({
-          top: windowHeight * 0.8,
-          behavior: "auto" // Use auto for faster loading
-        });
-      }
-      
-      // Retry after a short delay
-      setTimeout(() => attemptScroll(retries + 1), 150);
-    }
-  };
-  
-  attemptScroll();
+  const element = document.getElementById(sectionId);
+  if (element) {
+    const header = document.querySelector('.header');
+    const headerHeight = header ? header.offsetHeight : 80;
+    const yOffset = -headerHeight;
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
+    // Track interaction when button is clicked
+    trackInteraction(`cta-${sectionId}`);
+  }
 };
 
 // Handle button click with micro-interactions
@@ -238,26 +218,19 @@ const handleButtonClick = (event, sectionId) => {
 
 // Handle scroll indicator click
 const handleScrollClick = () => {
-  const attemptScroll = (retries = 0) => {
-    const aboutSection = document.getElementById("about");
-    if (aboutSection) {
-      const header = document.querySelector('.header');
-      const headerHeight = header ? header.offsetHeight : 80;
-      const yOffset = -headerHeight;
-      const y = aboutSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      
-      window.scrollTo({
-        top: y,
-        behavior: "smooth",
-      });
-      trackInteraction("scroll-indicator-click");
-    } else if (retries < 10) {
-      // Retry after a short delay
-      setTimeout(() => attemptScroll(retries + 1), 100);
-    }
-  };
-  
-  attemptScroll();
+  const aboutSection = document.getElementById("about");
+  if (aboutSection) {
+    const header = document.querySelector('.header');
+    const headerHeight = header ? header.offsetHeight : 80;
+    const yOffset = -headerHeight;
+    const y = aboutSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
+    trackInteraction("scroll-indicator-click");
+  }
 };
 
 // Handle profile image load and error

@@ -1,45 +1,34 @@
 <template>
   <div class="home">
-    <!-- Hero Section - Load immediately as it's above the fold -->
+    <!-- Hero Section -->
     <Hero />
     
     <div class="content-sections">
-      <!-- About Section - Lazy load -->
-      <LazyComponent 
-        :import-fn="() => import('@/components/sections/About.vue')"
-        :root-margin="'200px'"
-      />
+      <!-- About Section -->
+      <About />
 
-      <!-- Skills Section - Lazy load -->
-      <LazyComponent 
-        :import-fn="() => import('@/components/sections/Skills.vue')"
-        :root-margin="'200px'"
-      />
+      <!-- Skills Section -->
+      <Skills />
 
-      <!-- Experience Section - Lazy load -->
-      <LazyComponent 
-        :import-fn="() => import('@/components/sections/Experience.vue')"
-        :root-margin="'200px'"
-      />
+      <!-- Experience Section -->
+      <Experience />
 
-      <!-- Projects Section - Lazy load -->
-      <LazyComponent 
-        :import-fn="() => import('@/components/sections/Projects.vue')"
-        :root-margin="'200px'"
-      />
+      <!-- Projects Section -->
+      <Projects />
 
-      <!-- Contact Section - Lazy load -->
-      <LazyComponent 
-        :import-fn="() => import('@/components/sections/Contact.vue')"
-        :root-margin="'200px'"
-      />
+      <!-- Contact Section -->
+      <Contact />
     </div>
   </div>
 </template>
 
 <script setup>
 import Hero from '@/components/sections/Hero.vue'
-import LazyComponent from '@/components/ui/LazyComponent.vue'
+import About from '@/components/sections/About.vue'
+import Skills from '@/components/sections/Skills.vue'
+import Experience from '@/components/sections/Experience.vue'
+import Projects from '@/components/sections/Projects.vue'
+import Contact from '@/components/sections/Contact.vue'
 </script>
 
 <style scoped>

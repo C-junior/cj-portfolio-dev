@@ -110,43 +110,6 @@ const scrollToElement = (sectionId) => {
       top: y,
       behavior: 'smooth'
     })
-  } else {
-    // Element doesn't exist, trigger lazy loading by scrolling down progressively
-    const startTime = Date.now()
-    const maxWaitTime = 5000 // 5 seconds max wait time
-
-    const checkForElement = () => {
-      const elementCheck = document.getElementById(sectionId)
-      if (elementCheck) {
-        // Element is now available, scroll to it
-        const header = document.querySelector('.header')
-        const headerHeight = header ? header.offsetHeight : 80
-        const y = elementCheck.getBoundingClientRect().top + window.pageYOffset - headerHeight
-
-        window.scrollTo({
-          top: y,
-          behavior: 'smooth'
-        })
-      } else if (Date.now() - startTime < maxWaitTime) {
-        // Element still not loaded, scroll down more to trigger lazy loading
-        const currentScroll = window.pageYOffset
-        const documentHeight = document.documentElement.scrollHeight
-        const windowHeight = window.innerHeight
-        
-        if (currentScroll + windowHeight < documentHeight) {
-          window.scrollBy({
-            top: windowHeight * 0.8,
-            behavior: 'auto'
-          })
-        }
-        
-        // Wait and check again
-        setTimeout(checkForElement, 150)
-      }
-    }
-
-    // Start the check process
-    checkForElement()
   }
 }
 

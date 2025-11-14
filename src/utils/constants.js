@@ -193,6 +193,82 @@ export const PROJECTS = [
   },
   {
     id: 4,
+    title: "CodeNews - Atendimento System for Hospitals",
+    description:
+      "Advanced patient management system designed specifically for hospital environments, featuring real-time appointment scheduling, patient tracking, medical history management, and comprehensive healthcare workflow automation. The system streamlines hospital operations and enhances patient care through integrated communication tools and data analytics.",
+    image: "/images/projects/codenews.svg",
+    technologies: ["Vue.js", "JavaScript", "CSS3", "API Integration", "Database"],
+    category: "Healthcare Software",
+    status: "Completed",
+    year: "2024",
+    features: [
+      "Real-time patient tracking system",
+      "Medical history management",
+      "Appointment scheduling and notifications",
+      "Healthcare workflow automation",
+      "Integrated communication tools",
+      "Comprehensive reporting and analytics",
+      "Secure data encryption and privacy compliance",
+      "Multi-department coordination capabilities"
+    ],
+    links: {
+      demo: "#", // Add actual demo link
+      github: "#", // Add if available
+    },
+  },
+
+  {
+    id: 5,
+    title: "Agenda do Governador - Government Event Management",
+    description:
+      "Specialized platform for government officials to manage public events, meetings, and schedules. Features include real-time calendar synchronization, public announcement systems, media coordination tools, and comprehensive event documentation for transparency and public access.",
+    image: "/images/projects/agenda-governador.svg",
+    technologies: ["Vue.js", "JavaScript", "CSS3", "Real-time Database", "Notification System"],
+    category: "Government Software",
+    status: "Completed",
+    year: "2024",
+    features: [
+      "Real-time calendar management",
+      "Public event announcement system",
+      "Media coordination tools",
+      "Transparency and public access features",
+      "Comprehensive event documentation",
+      "Automated notification system",
+      "Multi-user access with role-based permissions",
+      "Analytics for public engagement metrics"
+    ],
+    links: {
+      demo: "#", // Add actual demo link
+      github: "#", // Add if available
+    },
+  },
+  {
+    id: 6,
+    title: "Quartzo Engenharia Civil - Construction Management",
+    description:
+      "Complete project management solution for civil engineering companies, featuring project tracking, resource management, timeline coordination, budget monitoring, and client communication tools. Designed to streamline construction workflows and enhance project delivery efficiency.",
+    image: "/images/projects/quartzo-engenharia.svg",
+    technologies: ["Vue.js", "JavaScript", "CSS3", "Project Management", "Database"],
+    category: "Construction Software",
+    status: "Completed",
+    year: "2024",
+    features: [
+      "Project timeline and milestone tracking",
+      "Resource allocation and management",
+      "Budget monitoring and financial reports",
+      "Client communication portal",
+      "Document management system",
+      "Team collaboration tools",
+      "Quality control and inspection tracking",
+      "Real-time project status updates"
+    ],
+    links: {
+      demo: "#", // Add actual demo link
+      github: "#", // Add if available
+    },
+  },
+  {
+    id: 7,
     title: "Citizen Services Platform",
     description:
       "Digital platform for citizens to access government services online with document management and appointment scheduling.",
@@ -214,7 +290,7 @@ export const PROJECTS = [
     },
   },
   {
-    id: 5,
+    id: 9,
     title: "Internal Management System",
     description:
       "Comprehensive internal management system for government employees with workflow automation and reporting.",
@@ -236,7 +312,7 @@ export const PROJECTS = [
     },
   },
   {
-    id: 6,
+    id: 10,
     title: "Digital Forms Builder",
     description:
       "Dynamic form builder for creating government forms with validation, conditional logic, and data export capabilities.",
@@ -258,7 +334,7 @@ export const PROJECTS = [
     },
   },
   {
-    id: 7,
+    id: 11,
     title: "Personal Portfolio Website",
     description:
       "Modern portfolio website showcasing projects and skills with gamification elements and smooth animations.",
@@ -291,6 +367,10 @@ export const TECHNOLOGY_CATEGORIES = [
   { name: "Tailwind", value: "Tailwind", color: "#06B6D4" },
   { name: "Figma", value: "Figma", color: "#F24E1E" },
   { name: "Wedding", value: "Wedding Website", color: "#EC4899" },
+  { name: "Healthcare", value: "Healthcare Software", color: "#10B981" },
+  { name: "Education", value: "Educational Technology", color: "#8B5CF6" },
+  { name: "Government", value: "Government Software", color: "#6366F1" },
+  { name: "Construction", value: "Construction Software", color: "#F59E0B" },
 ];
 
 // Animation settings

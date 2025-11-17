@@ -196,7 +196,7 @@ export const PROJECTS = [
     title: "CodeNews - System for Hospitals",
     description:
       "Advanced patient management system designed specifically for hospital environments, featuring real-time appointment scheduling, patient tracking, medical history management, and comprehensive healthcare workflow automation. The system streamlines hospital operations and enhances patient care through integrated communication tools and data analytics.",
-    image: "/images/projects/codenews.svg",
+    image: "/images/projects/codenews.png",
     technologies: ["Vue.js", "JavaScript", "CSS3", "API Integration", "Database"],
     category: "Healthcare Software",
     status: "Completed",

@@ -153,6 +153,15 @@ import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
 import { useGamification } from '@/composables/useGamification'
 import { USER_PROFILE } from '@/utils/constants'
 import SkillBar from '@/components/ui/SkillBar.vue'
+import { 
+  CodeIcon, 
+  PaletteIcon, 
+  HammerIcon, 
+  SproutIcon, 
+  ZapIcon, 
+  RocketIcon, 
+  TrophyIcon 
+} from 'lucide-vue-next'
 
 // Composables
 const { visitSection, trackInteraction, trackSkillAchievement, ACHIEVEMENTS } = useGamification()

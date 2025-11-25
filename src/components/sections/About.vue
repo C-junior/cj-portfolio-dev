@@ -201,6 +201,7 @@
 import { ref, computed, watch } from 'vue'
 import { useIntersectionObserver, useAnimatedCounter } from '@/composables/useIntersectionObserver'
 import { USER_PROFILE } from '@/utils/constants'
+import { MedalIcon } from 'lucide-vue-next'
 
 const userProfile = USER_PROFILE
 

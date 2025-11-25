@@ -143,6 +143,17 @@
           <div class="awards-grid">
             <div class="award-item">
               <div class="award-medal">
+                <MedalIcon :size="48" class="gold-medal" />
+              </div>
+              <div class="award-content">
+                <h4 class="award-title">1st Place - Desafio Industrial da Fieto</h4>
+                <p class="award-year">2025</p>
+                <p class="award-description">Champion of the innovation marathon focused on circular economy in civil construction with the "Sobra na Obra" project.</p>
+              </div>
+            </div>
+
+            <div class="award-item">
+              <div class="award-medal">
                 <MedalIcon :size="48" class="bronze-medal" />
               </div>
               <div class="award-content">

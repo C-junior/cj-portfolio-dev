@@ -79,6 +79,14 @@ export const USER_PROFILE = {
       { name: "Figma", years: 3, level: 85 },
       { name: "UI Design", years: 4.5, level: 88 },
     ],
+    soft: [
+      { name: "Problem Solving", years: 5, level: 95 },
+      { name: "Team Collaboration", years: 5, level: 90 },
+      { name: "Communication", years: 5, level: 85 },
+      { name: "Leadership", years: 4, level: 80 },
+      { name: "Time Management", years: 5, level: 90 },
+      { name: "Adaptability", years: 5, level: 95 },
+    ],
   },
   languages: [
     { name: "Portuguese", level: "Native" },
@@ -93,6 +101,7 @@ export const NAVIGATION_SECTIONS = [
   { id: "skills", label: "Skills", hash: "#skills" },
   { id: "experience", label: "Experience", hash: "#experience" },
   { id: "projects", label: "Projects", hash: "#projects" },
+  { id: "cv", label: "Resume", hash: "#cv" },
   { id: "contact", label: "Contact", hash: "#contact" },
 ];
 

@@ -16,6 +16,9 @@
       <!-- Projects Section -->
       <Projects />
 
+      <!-- CV Section -->
+      <CVSection />
+
       <!-- Contact Section -->
       <Contact />
     </div>
@@ -27,6 +30,7 @@ import Hero from '@/components/sections/Hero.vue'
 import About from '@/components/sections/About.vue'
 import Skills from '@/components/sections/Skills.vue'
 import Experience from '@/components/sections/Experience.vue'
+import CVSection from '@/components/sections/CVSection.vue'
 import Projects from '@/components/sections/Projects.vue'
 import Contact from '@/components/sections/Contact.vue'
 </script>
